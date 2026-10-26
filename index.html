@@ -224,6 +224,29 @@
     @media (forced-colors: active) {
       .tap { border: 2px solid ButtonText; }
     }
+
+    .member{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin:0 0 14px}
+    .member .badge{display:inline-block;background:var(--gold);color:#fff;font-weight:700;border-radius:999px;padding:3px 10px;font-size:.85rem}
+    .member .who{font-weight:600;margin-left:6px}
+    .member p{margin:6px 0 0;color:var(--ink-soft);font-size:.95rem}
+    .bar{height:8px;background:var(--muted-bg);border-radius:6px;overflow:hidden;margin-top:6px}
+    .bar span{display:block;height:100%;background:var(--gold)}
+    .paywarn{background:var(--off-bg);border:1px solid var(--gold);border-radius:12px;padding:10px 12px;margin:0 0 12px;color:var(--gold-deep)}
+    .empty{background:var(--muted-bg);border-radius:12px;padding:10px 12px;margin:0 0 12px;color:var(--ink-soft);font-size:.95rem}
+    .gallery{margin-top:22px}
+    .gallery h2{font-size:1.15rem;margin:0 0 4px}
+    .gallery .sub{color:var(--ink-soft);margin:0 0 10px;font-size:.95rem}
+    .modes{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:10px}
+    .modes button{font:inherit;font-size:.9rem;padding:10px 4px;border-radius:10px;border:1px solid var(--line);background:var(--paper);color:var(--ink);min-height:44px}
+    .modes button[aria-pressed="true"]{background:var(--gold);color:#fff;border-color:var(--gold-deep);font-weight:700}
+    .photos{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .photo{position:relative;border-radius:10px;overflow:hidden;border:1px solid var(--line)}
+    .photo svg{display:block;width:100%;height:auto}
+    .photo .flag{position:absolute;left:6px;bottom:6px;font-size:.75rem;background:rgba(255,250,243,.92);border-radius:6px;padding:2px 6px}
+    .picks{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:10px}
+    .picks label{display:flex;align-items:center;gap:10px;min-height:40px}
+    .picks input{width:22px;height:22px;accent-color:var(--gold)}
+    .picks button{font:inherit;margin-top:6px;padding:8px 14px;border-radius:10px;border:0;background:var(--pay);color:var(--pay-ink)}
   </style>
 </head>
 <body>
@@ -234,7 +257,7 @@
       width="2046"
       height="662"
       alt="Mitch's Mobile RV Repair"
-      onerror="this.onerror=null;this.src='Mitchs-Mobile-Long-logo.png'"
+      onerror="this.onerror=null;this.src='logo-main-v3.svg'"
     >
 
     <h1>Your stop with Mitch</h1>
@@ -245,26 +268,34 @@
       <input id="guest-name" name="name" type="text" inputmode="text" autocomplete="name" autocapitalize="words" maxlength="80" placeholder="Your name">
     </label>
 
+    <div class="paywarn" id="paywarn" hidden role="status">Heads up — your last membership payment didn't go through, so member perks are paused for now. Your banked hours are held 30 days. Text us at (903) 865-3518 and we'll sort it out.</div>
+    <section class="member" id="member" hidden aria-label="Membership">
+      <span class="badge" id="m-badge"></span><span class="who" id="m-who"></span>
+      <p id="m-rate"></p>
+      <div id="m-prog"><p id="m-prog-text"></p><div class="bar"><span id="m-bar"></span></div></div>
+    </section>
+    <p class="empty" id="empty" hidden>Your personal links will show here once Mitch sends your portal link. Questions? Call or text below.</p>
+
     <div class="taps">
-      <a class="tap tap-pay" id="tap-pay" href="https://quoteiq-2.web.app/invoices/babbbfd4a81057729e87" target="_blank" rel="noopener noreferrer">
+      <a class="tap tap-pay" id="tap-pay" target="_blank" rel="noopener noreferrer">
         <span class="tap-label">Pay invoice</span>
         <span class="tap-note">We'll text you a secure payment link if this one isn't ready.</span>
         <span class="sr-only">Opens in a new tab.</span>
       </a>
 
-      <a class="tap" id="tap-invoice" href="https://quoteiq-2.web.app/invoices/babbbfd4a81057729e87" target="_blank" rel="noopener noreferrer">
+      <a class="tap" id="tap-invoice" target="_blank" rel="noopener noreferrer">
         <span class="tap-label">Invoice</span>
         <span class="tap-note">Your current invoice.</span>
         <span class="sr-only">Opens in a new tab.</span>
       </a>
 
-      <a class="tap" id="tap-estimate" href="https://quoteiq-2.web.app/estimates/LQ8RLZWJLyxuz0Zl7ODp" target="_blank" rel="noopener noreferrer">
+      <a class="tap" id="tap-estimate" target="_blank" rel="noopener noreferrer">
         <span class="tap-label">Estimate</span>
         <span class="tap-note">Your estimate.</span>
         <span class="sr-only">Opens in a new tab.</span>
       </a>
 
-      <a class="tap" id="tap-receipt" href="https://quoteiq-2.web.app/invoices/pJIJI0EbatvJuiN5pG9k" target="_blank" rel="noopener noreferrer">
+      <a class="tap" id="tap-receipt" target="_blank" rel="noopener noreferrer">
         <span class="tap-label">Receipts</span>
         <span class="tap-note" id="receipt-note">Paid receipt — opens when your invoice is marked Paid.</span>
         <span class="sr-only" id="receipt-sr">Opens in a new tab.</span>
@@ -284,6 +315,22 @@
       </div>
     </div>
 
+    <section class="gallery" aria-labelledby="g-h">
+      <h2 id="g-h">Your job photos</h2>
+      <p class="sub">Okay with us sharing some of these on Facebook, Google, or our site? Totally your call — nothing gets shared while this is set to None. Change it anytime.</p>
+      <div class="modes" role="group" aria-label="Photo sharing">
+        <button type="button" data-mode="all" aria-pressed="false">Opt in all</button>
+        <button type="button" data-mode="pick" aria-pressed="false">Pick which</button>
+        <button type="button" data-mode="none" aria-pressed="false">None</button>
+      </div>
+      <div class="picks" id="picks" hidden>
+        <p class="sub" style="margin:0 0 4px">All checked — just uncheck any you'd like kept private.</p>
+        <div id="pick-list"></div>
+        <button type="button" id="picks-done">Done</button>
+      </div>
+      <div class="photos" id="photos"></div>
+    </section>
+
     <p class="foot">
       Mitch's Mobile RV Repair ·
       <a class="phone" href="tel:+19038653518">(903) 865-3518</a>
@@ -292,14 +339,56 @@
   </main>
 
   <script>
-    /* Elmer — swap these four for the real QuoteIQ guest links.
-       Leave a value as "" when that link is not ready.
-       Receipts then shows "Receipt ready after payment" and does not open a page.
-       These stubs are placeholders. This page does not take payment. */
-    var PAY_LINK = "https://quoteiq-2.web.app/invoices/babbbfd4a81057729e87";
-    var INVOICE_LINK = "https://quoteiq-2.web.app/invoices/babbbfd4a81057729e87";
-    var ESTIMATE_LINK = "https://quoteiq-2.web.app/estimates/LQ8RLZWJLyxuz0Zl7ODp";
-    var RECEIPT_LINK = "https://quoteiq-2.web.app/invoices/pJIJI0EbatvJuiN5pG9k";
+    /* Shape B pretty link: ?m=CODE (or #m=CODE) → member record.
+       Source of truth is members.json; MEMBERS_FALLBACK mirrors it so the page
+       still works when opened as a local file (fetch blocked). No login, no backend. */
+    var MEMBERS_FALLBACK = {
+      "paula-scott": {
+        "name": "Paula & Scott",
+        "tier": "",
+        "hours": 0,
+        "qi_customer_id": "4ihx2Oga6QngLKmYEdvn",
+        "PAY_LINK": "https://quoteiq-2.web.app/invoices/babbbfd4a81057729e87",
+        "INVOICE_LINK": "https://quoteiq-2.web.app/invoices/babbbfd4a81057729e87",
+        "ESTIMATE_LINK": "https://quoteiq-2.web.app/estimates/LQ8RLZWJLyxuz0Zl7ODp",
+        "RECEIPT_LINK": "https://quoteiq-2.web.app/invoices/pJIJI0EbatvJuiN5pG9k"
+      },
+      "james-april": {
+        "name": "James & April",
+        "tier": "",
+        "hours": 0,
+        "qi_customer_id": "9Oyz2c4MZUGz84rS5Aqf",
+        "PAY_LINK": "",
+        "INVOICE_LINK": "",
+        "ESTIMATE_LINK": "",
+        "RECEIPT_LINK": "https://quoteiq-2.web.app/invoices/lZLLttkd3IubcNTEvMe0"
+      },
+      "blake-wilson": {
+        "name": "Blake Wilson",
+        "tier": "",
+        "hours": 0,
+        "qi_customer_id": "1i5Q6WXXRt71uKW1GaDp",
+        "PAY_LINK": "",
+        "INVOICE_LINK": "",
+        "ESTIMATE_LINK": "https://quoteiq-2.web.app/estimates/83SuTYjCMII7ILtyRvzK",
+        "RECEIPT_LINK": "https://quoteiq-2.web.app/invoices/83SuTYjCMII7ILtyRvzK"
+      }
+    };
+    var TIERS = {
+      basic:   { badge: "Basic · $99/yr",   rate: "$10/hr off labor", goal: 9 },
+      premium: { badge: "Premium · $199/yr", rate: "$25/hr off labor", goal: 6 },
+      var:     { badge: "VAR · $39/yr",     rate: "Your VAR rate applies — plus $39 off your first ticket.", goal: 0 }
+    };
+    var STUB_HOURS = { basic: 4, premium: 2.5 };
+    var GALLERY_MODE_KEY = "mmrv-portal-gallery-mode";
+    var GALLERY_PICKS_KEY = "mmrv-portal-gallery-picks";
+    var PAYFAIL_KEY = "mmrv-portal-pay-fail";
+    var PHOTOS = [
+      { id: "p1", label: "Job photo 1", color: "#c4922a" },
+      { id: "p2", label: "Job photo 2", color: "#8a6a3a" },
+      { id: "p3", label: "Job photo 3", color: "#5c4a36" },
+      { id: "p4", label: "Job photo 4", color: "#d7a85a" }
+    ];
 
     var PATH_KEY = "mmrv-portal-path-off";
     var NAME_KEY = "mmrv-portal-guest-name";
@@ -388,10 +477,114 @@
       });
     }
 
-    applyLink("tap-pay", PAY_LINK);
-    applyLink("tap-invoice", INVOICE_LINK);
-    applyLink("tap-estimate", ESTIMATE_LINK);
-    applyLink("tap-receipt", RECEIPT_LINK, RECEIPT_WAIT_COPY);
+    function params() {
+      var q = new URLSearchParams(window.location.search);
+      var h = new URLSearchParams(String(window.location.hash || "").replace(/^#/, ""));
+      return { get: function (k) { return q.get(k) || h.get(k) || ""; } };
+    }
+    var P = params();
+    var memberCode = P.get("m").toLowerCase().replace(/[^a-z0-9-]/g, "");
+
+    function applyMember(members) {
+      var rec = memberCode && members && Object.prototype.hasOwnProperty.call(members, memberCode) ? members[memberCode] : null;
+      var r = rec || {};
+      applyLink("tap-pay", r.PAY_LINK, "Link coming by text.");
+      applyLink("tap-invoice", r.INVOICE_LINK, "Link coming by text.");
+      applyLink("tap-estimate", r.ESTIMATE_LINK, "Link coming by text.");
+      applyLink("tap-receipt", r.RECEIPT_LINK, RECEIPT_WAIT_COPY);
+      document.getElementById("empty").hidden = !!rec;
+      var input = document.getElementById("guest-name");
+      if (rec && rec.name && !input.value) input.value = rec.name;
+      var tier = String(P.get("tier") || r.tier || "").toLowerCase();
+      var hours = P.get("hrs") !== "" ? parseFloat(P.get("hrs")) : (r.hours || STUB_HOURS[tier] || 0);
+      paintMember(TIERS[tier] ? tier : "", rec ? rec.name : "", hours);
+    }
+
+    function paintMember(tier, name, hours) {
+      var box = document.getElementById("member");
+      if (!tier) { box.hidden = true; return; }
+      var t = TIERS[tier];
+      box.hidden = false;
+      document.getElementById("m-badge").textContent = t.badge;
+      document.getElementById("m-who").textContent = name || "";
+      document.getElementById("m-rate").textContent = t.rate;
+      var prog = document.getElementById("m-prog");
+      if (!t.goal) { prog.hidden = true; return; }
+      prog.hidden = false;
+      var h = Math.max(0, Math.min(t.goal, isNaN(hours) ? 0 : hours));
+      document.getElementById("m-prog-text").textContent = "Free service call: " + h + " of " + t.goal + " hrs banked";
+      document.getElementById("m-bar").style.width = (h / t.goal * 100) + "%";
+    }
+
+    function initPayFail() {
+      var v = P.get("pay");
+      if (v === "fail") storageSet(PAYFAIL_KEY, "1");
+      if (v === "ok") storageDel(PAYFAIL_KEY);
+      document.getElementById("paywarn").hidden = storageGet(PAYFAIL_KEY) !== "1";
+    }
+
+    function readPicks() {
+      try { var o = JSON.parse(storageGet(GALLERY_PICKS_KEY) || "{}"); return o && typeof o === "object" ? o : {}; } catch (e) { return {}; }
+    }
+    function photoShared(mode, picks, id) {
+      if (mode === "all") return true;
+      if (mode === "pick") return picks[id] !== false;
+      return false;
+    }
+    function paintGallery() {
+      var mode = storageGet(GALLERY_MODE_KEY) || "none";
+      var picks = readPicks();
+      Array.prototype.forEach.call(document.querySelectorAll(".modes button"), function (b) {
+        b.setAttribute("aria-pressed", b.dataset.mode === mode ? "true" : "false");
+      });
+      var grid = document.getElementById("photos");
+      grid.innerHTML = "";
+      PHOTOS.forEach(function (ph) {
+        var d = document.createElement("div");
+        d.className = "photo";
+        d.innerHTML = '<svg viewBox="0 0 160 110" role="img" aria-label="' + ph.label + '"><rect width="160" height="110" fill="' + ph.color + '"/><text x="80" y="60" text-anchor="middle" fill="#fffaf3" font-size="14" font-family="sans-serif">' + ph.label + '</text></svg>';
+        var f = document.createElement("span");
+        f.className = "flag";
+        f.textContent = photoShared(mode, picks, ph.id) ? "OK to share" : "Private";
+        d.appendChild(f);
+        grid.appendChild(d);
+      });
+    }
+    function openPicks() {
+      var picks = {};
+      PHOTOS.forEach(function (ph) { picks[ph.id] = true; });
+      storageSet(GALLERY_PICKS_KEY, JSON.stringify(picks));
+      var list = document.getElementById("pick-list");
+      list.innerHTML = "";
+      PHOTOS.forEach(function (ph) {
+        var l = document.createElement("label");
+        var c = document.createElement("input");
+        c.type = "checkbox"; c.checked = true;
+        c.addEventListener("change", function () {
+          var p = readPicks(); p[ph.id] = c.checked;
+          storageSet(GALLERY_PICKS_KEY, JSON.stringify(p));
+          paintGallery();
+        });
+        l.appendChild(c);
+        l.appendChild(document.createTextNode(ph.label));
+        list.appendChild(l);
+      });
+      document.getElementById("picks").hidden = false;
+    }
+    function initGallery() {
+      Array.prototype.forEach.call(document.querySelectorAll(".modes button"), function (b) {
+        b.addEventListener("click", function () {
+          storageSet(GALLERY_MODE_KEY, b.dataset.mode);
+          if (b.dataset.mode === "pick") openPicks();
+          else document.getElementById("picks").hidden = true;
+          paintGallery();
+        });
+      });
+      document.getElementById("picks-done").addEventListener("click", function () {
+        document.getElementById("picks").hidden = true;
+      });
+      paintGallery();
+    }
 
     paintPath(pathIsOff());
     document.getElementById("tap-path").addEventListener("click", function () {
@@ -412,6 +605,13 @@
     });
 
     initName();
+    initPayFail();
+    initGallery();
+    applyMember(MEMBERS_FALLBACK);
+    if (memberCode && window.fetch && location.protocol !== "file:") {
+      fetch("members.json", { cache: "no-store" }).then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (j) { if (j) applyMember(j); }).catch(function () {});
+    }
   </script>
 </body>
 </html>
