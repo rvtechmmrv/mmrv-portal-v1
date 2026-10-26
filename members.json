@@ -1,0 +1,34 @@
+{
+  "paula-scott": {
+    "name": "Paula & Scott",
+    "tier": "",
+    "hours": 0,
+    "qi_customer_id": "4ihx2Oga6QngLKmYEdvn",
+    "PAY_LINK": "https://quoteiq-2.web.app/invoices/babbbfd4a81057729e87",
+    "INVOICE_LINK": "https://quoteiq-2.web.app/invoices/babbbfd4a81057729e87",
+    "ESTIMATE_LINK": "https://quoteiq-2.web.app/estimates/LQ8RLZWJLyxuz0Zl7ODp",
+    "RECEIPT_LINK": "https://quoteiq-2.web.app/invoices/pJIJI0EbatvJuiN5pG9k"
+  },
+  "james-april": {
+    "name": "James & April",
+    "tier": "",
+    "hours": 0,
+    "qi_customer_id": "9Oyz2c4MZUGz84rS5Aqf",
+    "PAY_LINK": "",
+    "INVOICE_LINK": "",
+    "ESTIMATE_LINK": "",
+    "RECEIPT_LINK": "https://quoteiq-2.web.app/invoices/lZLLttkd3IubcNTEvMe0",
+    "notes": "All QI invoices Paid (newest #149 Jul). No open estimate. Pay/Invoice/Estimate muted until new docs exist."
+  },
+  "blake-wilson": {
+    "name": "Blake Wilson",
+    "tier": "",
+    "hours": 0,
+    "qi_customer_id": "1i5Q6WXXRt71uKW1GaDp",
+    "PAY_LINK": "",
+    "INVOICE_LINK": "",
+    "ESTIMATE_LINK": "https://quoteiq-2.web.app/estimates/83SuTYjCMII7ILtyRvzK",
+    "RECEIPT_LINK": "https://quoteiq-2.web.app/invoices/83SuTYjCMII7ILtyRvzK",
+    "notes": "Invoice #197 Paid (was estimate #127). Pay/Invoice muted (no open balance)."
+  }
+}
