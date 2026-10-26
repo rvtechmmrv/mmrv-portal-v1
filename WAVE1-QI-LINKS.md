@@ -8,3 +8,5 @@ Pulled 2026-10-26 ~12:17 CT by Cobs (documents_share_link). Codes for June soft-
 | `blake-wilson` | Blake Wilson | https://portal.mmrvsolar.com/?m=blake-wilson | *(muted — paid)* | *(muted)* | #127 `83SuTYjCMII7ILtyRvzK` | #197 Paid same id |
 
 QI customer ids: James/April `9Oyz2c4MZUGz84rS5Aqf` · Blake `1i5Q6WXXRt71uKW1GaDp` · Paula `4ihx2Oga6QngLKmYEdvn`.
+
+v2 (2026-10-26): the same three URLs also show Your rig, Work on this coach, and Self-quote. Blake is `tier: premium` with `hours: 3` (demo midpoint). Paula and James/April stay `tier: ""`. Rig year/make/model are blank on purpose — QuoteIQ did not have them. Work-log dollars are from the invoices and estimates named in `members.json`.
