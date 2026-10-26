@@ -27,6 +27,10 @@ GitHub Pages cannot accept an upload, and this repo has no Drive API secret. Day
 
 `work_log`: `{ date, title, status: done|planned, amount, note }`. `amount: null` means no price on file. Guests do not edit the log. Free-trip progress stays on the membership card (Premium goal 6 hours, Basic goal 9). Blake’s `hours: 3` is a demo midpoint, not a QuoteIQ balance (`hours_note`).
 
+## Membership terms
+
+Premium and Basic show a collapsed **Membership terms** control under the membership card (under the failed-payment banner when that banner is on). Empty tier and VAR hide it. The four points, locked 2026-10-26, are cancel notice before the next monthly pull, a missed card payment, the ~$75 / ~45-mile service area, and what the free $75 trip covers. Copy is in `index.html`. Do not add terms beyond that list.
+
 ## Self-quote
 
 Portal tap opens `https://mmrvsolar.com/self-quote` with query params when we have them: `m`, `tier`, `year`, `make`, `model`, `type`, `coachType` (`TT` → `travel_trailer`, `5th` → `fifth_wheel`; motorhome is left unset so we do not guess Class A/B/C), `lengthFt`, `address` (parked), `systems`.

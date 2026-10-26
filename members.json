@@ -148,24 +148,40 @@
     "ESTIMATE_LINK": "",
     "RECEIPT_LINK": "",
     "hours_note": "Demo stub so the free-trip bar reads 2.5 of 6. Not a QuoteIQ hour balance.",
-    "notes": "Family beta — Premium demo. Mitch yes 2026-10-26. QI links TBD Elmer/Cobs.",
+    "notes": "Family beta — Premium demo. Mitch yes 2026-10-26. QI links TBD Elmer/Cobs. Trailer and work log are demo fills so the page isn't empty.",
     "trailer": {
-      "year": "",
-      "make": "",
-      "model": "",
-      "length_ft": "",
-      "type": "",
+      "year": "2021",
+      "make": "Grand Design",
+      "model": "Imagine 2800BH",
+      "length_ft": "32",
+      "type": "TT",
       "data_plate_photos": [],
-      "warranty_provider": "",
-      "warranty_expiry": "",
+      "warranty_provider": "Grand Design",
+      "warranty_expiry": "2027-06-01",
       "systems": {
-        "ac": "",
-        "wh": "",
-        "solar": ""
+        "ac": "15k ducted roof unit",
+        "wh": "6-gallon gas/electric",
+        "solar": "200W suitcase"
       },
-      "parked": ""
+      "parked": "Henderson, TX",
+      "seed_note": "Demo rig for the Premium family beta so the card isn't empty. Not from QuoteIQ (2026-10-26). QI links TBD Elmer/Cobs."
     },
-    "work_log": []
+    "work_log": [
+      {
+        "date": "2026-09-04",
+        "title": "Roof AC service",
+        "status": "done",
+        "amount": 185,
+        "note": "Demo line. One roof unit cleaned and checked. Not a QuoteIQ invoice."
+      },
+      {
+        "date": "2026-11-07",
+        "title": "Seal check before a trip",
+        "status": "planned",
+        "amount": 150,
+        "note": "Demo line. $75 service call plus labor. Not booked yet."
+      }
+    ]
   },
   "don-francis": {
     "name": "Don Francis",
@@ -177,23 +193,39 @@
     "ESTIMATE_LINK": "",
     "RECEIPT_LINK": "",
     "hours_note": "Demo stub so the free-trip bar reads 4 of 9. Not a QuoteIQ hour balance.",
-    "notes": "Family beta — Basic demo. Mitch yes 2026-10-26. QI links TBD Elmer/Cobs.",
+    "notes": "Family beta — Basic demo. Mitch yes 2026-10-26. QI links TBD Elmer/Cobs. Trailer and work log are demo fills so the page isn't empty.",
     "trailer": {
-      "year": "",
-      "make": "",
-      "model": "",
-      "length_ft": "",
-      "type": "",
+      "year": "2018",
+      "make": "Grand Design",
+      "model": "Reflection 150 Series",
+      "length_ft": "31",
+      "type": "5th",
       "data_plate_photos": [],
-      "warranty_provider": "",
-      "warranty_expiry": "",
+      "warranty_provider": "Expired (demo)",
+      "warranty_expiry": "2023-05-01",
       "systems": {
-        "ac": "",
-        "wh": "",
-        "solar": ""
+        "ac": "13.5k roof unit",
+        "wh": "Suburban 6-gallon",
+        "solar": "None on the roof"
       },
-      "parked": ""
+      "parked": "Henderson, TX",
+      "seed_note": "Demo rig for the Basic family beta so the card isn't empty. Not from QuoteIQ (2026-10-26). QI links TBD Elmer/Cobs."
     },
-    "work_log": []
+    "work_log": [
+      {
+        "date": "2026-06-20",
+        "title": "Water heater service",
+        "status": "done",
+        "amount": 240,
+        "note": "Demo line. Anode and flush. Not a QuoteIQ invoice."
+      },
+      {
+        "date": "2026-11-18",
+        "title": "Slide adjustment",
+        "status": "planned",
+        "amount": 125,
+        "note": "Demo line. Labor after the service call. Not booked yet."
+      }
+    ]
   }
 }
