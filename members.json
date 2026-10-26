@@ -137,5 +137,63 @@
         "note": "Invoice #197, paid. Service call, skylight, fiberglass repair, and EPDM patch."
       }
     ]
+  },
+  "lisa": {
+    "name": "Lisa",
+    "tier": "premium",
+    "hours": 2.5,
+    "qi_customer_id": "",
+    "PAY_LINK": "",
+    "INVOICE_LINK": "",
+    "ESTIMATE_LINK": "",
+    "RECEIPT_LINK": "",
+    "hours_note": "Demo stub so the free-trip bar reads 2.5 of 6. Not a QuoteIQ hour balance.",
+    "notes": "Family beta — Premium demo. Mitch yes 2026-10-26. QI links TBD Elmer/Cobs.",
+    "trailer": {
+      "year": "",
+      "make": "",
+      "model": "",
+      "length_ft": "",
+      "type": "",
+      "data_plate_photos": [],
+      "warranty_provider": "",
+      "warranty_expiry": "",
+      "systems": {
+        "ac": "",
+        "wh": "",
+        "solar": ""
+      },
+      "parked": ""
+    },
+    "work_log": []
+  },
+  "don-francis": {
+    "name": "Don Francis",
+    "tier": "basic",
+    "hours": 4,
+    "qi_customer_id": "",
+    "PAY_LINK": "",
+    "INVOICE_LINK": "",
+    "ESTIMATE_LINK": "",
+    "RECEIPT_LINK": "",
+    "hours_note": "Demo stub so the free-trip bar reads 4 of 9. Not a QuoteIQ hour balance.",
+    "notes": "Family beta — Basic demo. Mitch yes 2026-10-26. QI links TBD Elmer/Cobs.",
+    "trailer": {
+      "year": "",
+      "make": "",
+      "model": "",
+      "length_ft": "",
+      "type": "",
+      "data_plate_photos": [],
+      "warranty_provider": "",
+      "warranty_expiry": "",
+      "systems": {
+        "ac": "",
+        "wh": "",
+        "solar": ""
+      },
+      "parked": ""
+    },
+    "work_log": []
   }
 }
