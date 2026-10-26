@@ -7,7 +7,54 @@
     "PAY_LINK": "https://quoteiq-2.web.app/invoices/babbbfd4a81057729e87",
     "INVOICE_LINK": "https://quoteiq-2.web.app/invoices/babbbfd4a81057729e87",
     "ESTIMATE_LINK": "https://quoteiq-2.web.app/estimates/LQ8RLZWJLyxuz0Zl7ODp",
-    "RECEIPT_LINK": "https://quoteiq-2.web.app/invoices/pJIJI0EbatvJuiN5pG9k"
+    "RECEIPT_LINK": "https://quoteiq-2.web.app/invoices/pJIJI0EbatvJuiN5pG9k",
+    "trailer": {
+      "year": "",
+      "make": "",
+      "model": "",
+      "length_ft": "",
+      "type": "",
+      "data_plate_photos": [],
+      "warranty_provider": "",
+      "warranty_expiry": "",
+      "systems": {
+        "ac": "",
+        "wh": "",
+        "solar": ""
+      },
+      "parked": "18560 Co Rd 4256, Henderson, Texas 75654",
+      "seed_note": "Placeholder rig. Year, make, model, length, type, warranty, and systems were not on the QuoteIQ contact (2026-10-26). Parked is the address on estimate #161 and invoice #207."
+    },
+    "work_log": [
+      {
+        "date": "2026-06-14",
+        "title": "Invoice #130",
+        "status": "done",
+        "amount": 77.63,
+        "note": "Paid receipt."
+      },
+      {
+        "date": "2026-10-14",
+        "title": "Estimate #161 — general repair",
+        "status": "planned",
+        "amount": 245.53,
+        "note": "Open. General repair $150, service call $75, shop supply $5, plus tax."
+      },
+      {
+        "date": "2026-10-20",
+        "title": "Lap seal deposit",
+        "status": "planned",
+        "amount": 75,
+        "note": "Invoice #207, pending. Six-month lap-seal plan."
+      },
+      {
+        "date": "2026-10-30",
+        "title": "Flush",
+        "status": "planned",
+        "amount": null,
+        "note": "On the calendar Oct 30. No price on the schedule yet."
+      }
+    ]
   },
   "james-april": {
     "name": "James & April",
@@ -18,17 +65,135 @@
     "INVOICE_LINK": "",
     "ESTIMATE_LINK": "",
     "RECEIPT_LINK": "https://quoteiq-2.web.app/invoices/lZLLttkd3IubcNTEvMe0",
-    "notes": "All QI invoices Paid (newest #149 Jul). No open estimate. Pay/Invoice/Estimate muted until new docs exist."
+    "notes": "All QI invoices Paid (newest #149 Jul). No open estimate. Pay/Invoice/Estimate muted until new docs exist.",
+    "trailer": {
+      "year": "",
+      "make": "",
+      "model": "",
+      "length_ft": "",
+      "type": "",
+      "data_plate_photos": [],
+      "warranty_provider": "",
+      "warranty_expiry": "",
+      "systems": {
+        "ac": "Two roof units serviced 2026-07-24 (invoice #149).",
+        "wh": "",
+        "solar": ""
+      },
+      "parked": "3397 U.S. 259, Henderson, TX 75652",
+      "seed_note": "Placeholder rig except AC and parked. AC is from invoice #149. Parked is the address on that invoice. Year, make, model, length, type, warranty, water heater, and solar were not on the QuoteIQ contact (2026-10-26)."
+    },
+    "work_log": [
+      {
+        "date": "2026-05-15",
+        "title": "Invoice #116",
+        "status": "done",
+        "amount": 327.29,
+        "note": "Paid."
+      },
+      {
+        "date": "2026-07-24",
+        "title": "AC clean — two units",
+        "status": "done",
+        "amount": 258.75,
+        "note": "Invoice #149, paid. First unit $175, additional unit $75, card fee in the total."
+      }
+    ]
   },
   "blake-wilson": {
     "name": "Blake Wilson",
-    "tier": "",
-    "hours": 0,
+    "tier": "premium",
+    "hours": 3,
+    "hours_note": "Demo midpoint so the free-trip bar reads 3 of 6. Not a QuoteIQ hour balance.",
     "qi_customer_id": "1i5Q6WXXRt71uKW1GaDp",
     "PAY_LINK": "",
     "INVOICE_LINK": "",
     "ESTIMATE_LINK": "https://quoteiq-2.web.app/estimates/83SuTYjCMII7ILtyRvzK",
     "RECEIPT_LINK": "https://quoteiq-2.web.app/invoices/83SuTYjCMII7ILtyRvzK",
-    "notes": "Invoice #197 Paid (was estimate #127). Pay/Invoice muted (no open balance)."
+    "notes": "Invoice #197 Paid (was estimate #127). Pay/Invoice muted (no open balance). tier premium is the v2 demo.",
+    "trailer": {
+      "year": "",
+      "make": "",
+      "model": "",
+      "length_ft": "",
+      "type": "",
+      "data_plate_photos": [],
+      "warranty_provider": "",
+      "warranty_expiry": "",
+      "systems": {
+        "ac": "",
+        "wh": "",
+        "solar": ""
+      },
+      "parked": "5059 FM 225, Henderson, Texas 75654",
+      "seed_note": "Placeholder rig. Year, make, model, length, type, warranty, and systems were not on the QuoteIQ contact (2026-10-26). Parked is the address on invoice #197."
+    },
+    "work_log": [
+      {
+        "date": "2026-09-28",
+        "title": "Skylight, camp kitchen door, and slide roof",
+        "status": "done",
+        "amount": 1425,
+        "note": "Invoice #197, paid. Service call, skylight, fiberglass repair, and EPDM patch."
+      }
+    ]
+  },
+  "lisa": {
+    "name": "Lisa",
+    "tier": "premium",
+    "hours": 2.5,
+    "qi_customer_id": "",
+    "PAY_LINK": "",
+    "INVOICE_LINK": "",
+    "ESTIMATE_LINK": "",
+    "RECEIPT_LINK": "",
+    "hours_note": "Demo stub so the free-trip bar reads 2.5 of 6. Not a QuoteIQ hour balance.",
+    "notes": "Family beta — Premium demo. Mitch yes 2026-10-26. QI links TBD Elmer/Cobs.",
+    "trailer": {
+      "year": "",
+      "make": "",
+      "model": "",
+      "length_ft": "",
+      "type": "",
+      "data_plate_photos": [],
+      "warranty_provider": "",
+      "warranty_expiry": "",
+      "systems": {
+        "ac": "",
+        "wh": "",
+        "solar": ""
+      },
+      "parked": ""
+    },
+    "work_log": []
+  },
+  "don-francis": {
+    "name": "Don Francis",
+    "tier": "basic",
+    "hours": 4,
+    "qi_customer_id": "",
+    "PAY_LINK": "",
+    "INVOICE_LINK": "",
+    "ESTIMATE_LINK": "",
+    "RECEIPT_LINK": "",
+    "hours_note": "Demo stub so the free-trip bar reads 4 of 9. Not a QuoteIQ hour balance.",
+    "notes": "Family beta — Basic demo. Mitch yes 2026-10-26. QI links TBD Elmer/Cobs.",
+    "trailer": {
+      "year": "",
+      "make": "",
+      "model": "",
+      "length_ft": "",
+      "type": "",
+      "data_plate_photos": [],
+      "warranty_provider": "",
+      "warranty_expiry": "",
+      "systems": {
+        "ac": "",
+        "wh": "",
+        "solar": ""
+      },
+      "parked": ""
+    },
+    "work_log": []
   }
 }

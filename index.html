@@ -170,7 +170,12 @@
 
     .tap:focus-visible,
     .name input:focus-visible,
-    .phone:focus-visible {
+    .phone:focus-visible,
+    .block input:focus-visible,
+    .block select:focus-visible,
+    .block textarea:focus-visible,
+    .block button:focus-visible,
+    .block a:focus-visible {
       outline: 3px solid var(--focus);
       outline-offset: 3px;
     }
@@ -247,6 +252,92 @@
     .picks label{display:flex;align-items:center;gap:10px;min-height:40px}
     .picks input{width:22px;height:22px;accent-color:var(--gold)}
     .picks button{font:inherit;margin-top:6px;padding:8px 14px;border-radius:10px;border:0;background:var(--pay);color:var(--pay-ink)}
+
+    .block { margin-top: 22px; }
+    .block h2 { font-size: 1.15rem; margin: 0 0 4px; }
+    .block h3 { font-size: 1rem; margin: 14px 0 6px; }
+    .block .sub { color: var(--ink-soft); margin: 0 0 10px; font-size: 0.95rem; }
+    .block a { color: var(--ink); font-weight: 700; }
+    .fields { display: flex; flex-direction: column; gap: 10px; }
+    .fields label, .time-form label {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+    .fields input, .fields select, .fields textarea, .time-form input, .time-form textarea {
+      display: block;
+      width: 100%;
+      min-height: 48px;
+      margin: 0;
+      padding: 10px 12px;
+      border: 1.5px solid var(--line);
+      border-radius: 12px;
+      background: var(--paper);
+      color: var(--ink);
+      font: inherit;
+      font-weight: 400;
+    }
+    .fields textarea, .time-form textarea { min-height: 88px; resize: vertical; }
+    .split { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    @media (max-width: 360px) { .split { grid-template-columns: 1fr; } }
+    .log { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+    .log li {
+      background: var(--paper);
+      border: 1.5px solid var(--line);
+      border-left: 6px solid var(--gold);
+      border-radius: 12px;
+      padding: 10px 12px;
+    }
+    .log li.is-done { border-left-color: var(--ink-soft); }
+    .log .top { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
+    .log .amt { font-weight: 700; white-space: nowrap; }
+    .log .meta { color: var(--ink-soft); font-size: 0.95rem; margin-top: 2px; }
+    .strip {
+      background: var(--paper);
+      border: 1.5px solid var(--line);
+      border-left: 6px solid var(--gold);
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin: 0 0 10px;
+    }
+    .actions { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+    .btn {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      min-height: 48px;
+      margin: 0;
+      padding: 10px 14px;
+      border: 1.5px solid var(--line);
+      border-radius: 12px;
+      background: var(--paper);
+      color: var(--ink);
+      font: inherit;
+      font-weight: 700;
+      text-align: left;
+      cursor: pointer;
+      touch-action: manipulation;
+    }
+    .btn.primary { background: var(--pay); color: var(--pay-ink); border-color: var(--pay); }
+    .file-label { font-weight: 700; }
+    .file-label input { margin-top: 6px; font-weight: 400; }
+    .plates { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
+    .plate {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 8px;
+    }
+    .plate img { width: 72px; height: 54px; object-fit: cover; border-radius: 6px; background: var(--muted-bg); }
+    .plate .grow { flex: 1; min-width: 0; word-break: break-word; }
+    .plate button { font: inherit; min-height: 44px; padding: 8px 10px; border-radius: 10px; border: 1px solid var(--line); background: var(--paper); }
+    .status { min-height: 1.3em; margin: 8px 0 0; color: var(--gold-deep); font-size: 0.95rem; }
+    .time-form { margin-top: 12px; display: flex; flex-direction: column; gap: 10px; }
   </style>
 </head>
 <body>
@@ -315,6 +406,95 @@
       </div>
     </div>
 
+    <section class="block" id="trailer-block" hidden aria-labelledby="trailer-h">
+      <h2 id="trailer-h">Your rig</h2>
+      <p class="sub">Fix anything that is off. Saving stays on this phone. Emailing the shop queues it for the same day — this page does not write the shop system itself.</p>
+      <div class="fields" id="trailer-fields">
+        <div class="split">
+          <label>Year
+            <input id="tr-year" inputmode="numeric" maxlength="4" autocomplete="off" placeholder="2018">
+          </label>
+          <label>Length (ft)
+            <input id="tr-length" inputmode="decimal" maxlength="6" autocomplete="off" placeholder="32">
+          </label>
+        </div>
+        <label>Make
+          <input id="tr-make" maxlength="60" autocomplete="off" placeholder="Forest River">
+        </label>
+        <label>Model
+          <input id="tr-model" maxlength="60" autocomplete="off" placeholder="Salem">
+        </label>
+        <label>Type
+          <select id="tr-type">
+            <option value="">Not on file</option>
+            <option value="TT">Travel trailer (TT)</option>
+            <option value="5th">Fifth wheel (5th)</option>
+            <option value="MH">Motorhome (MH)</option>
+          </select>
+        </label>
+        <label>Where it’s parked
+          <input id="tr-parked" maxlength="160" autocomplete="street-address" placeholder="Address or park and lot">
+        </label>
+        <div class="split">
+          <label>Warranty
+            <input id="tr-warranty" maxlength="80" autocomplete="off" placeholder="Provider">
+          </label>
+          <label>Warranty expiry
+            <input id="tr-expiry" maxlength="40" autocomplete="off" placeholder="YYYY-MM-DD">
+          </label>
+        </div>
+        <label>Air conditioner
+          <input id="tr-ac" maxlength="160" autocomplete="off" placeholder="Brand, count, or notes">
+        </label>
+        <label>Water heater
+          <input id="tr-wh" maxlength="160" autocomplete="off" placeholder="Brand or type">
+        </label>
+        <label>Solar
+          <input id="tr-solar" maxlength="160" autocomplete="off" placeholder="Panels, inverter, or none">
+        </label>
+        <label class="file-label">Data plate photo
+          <input id="tr-plate" type="file" accept="image/*" multiple>
+        </label>
+      </div>
+      <div class="plates" id="plate-list"></div>
+      <p class="sub" id="plate-help">Photos are not stored on this site. Download the picture, or use the share sheet, and send it to mmrv+june@mail.grokbot.com. June files it for the shop.</p>
+      <div class="actions">
+        <button type="button" class="btn" id="trailer-save">Save on this phone</button>
+        <button type="button" class="btn primary" id="trailer-send">Email rig details to the shop</button>
+      </div>
+      <p class="status" id="trailer-status" role="status"></p>
+    </section>
+
+    <section class="block" id="work-block" hidden aria-labelledby="work-h">
+      <h2 id="work-h">Work on this coach</h2>
+      <p class="sub" id="work-intro">Done and what’s still planned, with the price.</p>
+      <h3>Planned</h3>
+      <ul class="log" id="work-planned"></ul>
+      <h3>Done</h3>
+      <ul class="log" id="work-done"></ul>
+    </section>
+
+    <section class="block" id="quote-block" aria-labelledby="quote-h">
+      <h2 id="quote-h">Self-quote</h2>
+      <p class="strip" id="quote-strip">Rack prices. Members save $10 an hour (Basic) or $25 an hour (Premium) on labor.</p>
+      <a class="tap" id="tap-quote" href="https://mmrvsolar.com/self-quote" target="_blank" rel="noopener noreferrer">
+        <span class="tap-label">Self-quote</span>
+        <span class="tap-note" id="quote-note">Opens the public price menu.</span>
+        <span class="sr-only">Opens in a new tab.</span>
+      </a>
+      <form class="time-form" id="time-form">
+        <label>When works for you?
+          <input id="time-when" maxlength="120" autocomplete="off" placeholder="Thursday afternoon, or next Tuesday morning">
+        </label>
+        <label>Note for June
+          <textarea id="time-note" maxlength="400" placeholder="Optional"></textarea>
+        </label>
+        <button type="submit" class="btn primary">Request a time</button>
+        <p class="sub" id="time-publish">This asks for a time. It does not book the visit. June will message you to confirm. To: <a href="mailto:mmrv+june@mail.grokbot.com">mmrv+june@mail.grokbot.com</a>. Shop inbox: <a id="admin-link" href="https://selfquote.grok.me/admin">self-quote /admin</a>.</p>
+        <p class="status" id="time-status" role="status"></p>
+      </form>
+    </section>
+
     <section class="gallery" aria-labelledby="g-h">
       <h2 id="g-h">Your job photos</h2>
       <p class="sub">Okay with us sharing some of these on Facebook, Google, or our site? Totally your call — nothing gets shared while this is set to None. Change it anytime.</p>
@@ -342,6 +522,7 @@
     /* Shape B pretty link: ?m=CODE (or #m=CODE) → member record.
        Source of truth is members.json; MEMBERS_FALLBACK mirrors it so the page
        still works when opened as a local file (fetch blocked). No login, no backend. */
+    /* Keep in sync with members.json. */
     var MEMBERS_FALLBACK = {
       "paula-scott": {
         "name": "Paula & Scott",
@@ -351,7 +532,54 @@
         "PAY_LINK": "https://quoteiq-2.web.app/invoices/babbbfd4a81057729e87",
         "INVOICE_LINK": "https://quoteiq-2.web.app/invoices/babbbfd4a81057729e87",
         "ESTIMATE_LINK": "https://quoteiq-2.web.app/estimates/LQ8RLZWJLyxuz0Zl7ODp",
-        "RECEIPT_LINK": "https://quoteiq-2.web.app/invoices/pJIJI0EbatvJuiN5pG9k"
+        "RECEIPT_LINK": "https://quoteiq-2.web.app/invoices/pJIJI0EbatvJuiN5pG9k",
+        "trailer": {
+          "year": "",
+          "make": "",
+          "model": "",
+          "length_ft": "",
+          "type": "",
+          "data_plate_photos": [],
+          "warranty_provider": "",
+          "warranty_expiry": "",
+          "systems": {
+            "ac": "",
+            "wh": "",
+            "solar": ""
+          },
+          "parked": "18560 Co Rd 4256, Henderson, Texas 75654",
+          "seed_note": "Placeholder rig. Year, make, model, length, type, warranty, and systems were not on the QuoteIQ contact (2026-10-26). Parked is the address on estimate #161 and invoice #207."
+        },
+        "work_log": [
+          {
+            "date": "2026-06-14",
+            "title": "Invoice #130",
+            "status": "done",
+            "amount": 77.63,
+            "note": "Paid receipt."
+          },
+          {
+            "date": "2026-10-14",
+            "title": "Estimate #161 — general repair",
+            "status": "planned",
+            "amount": 245.53,
+            "note": "Open. General repair $150, service call $75, shop supply $5, plus tax."
+          },
+          {
+            "date": "2026-10-20",
+            "title": "Lap seal deposit",
+            "status": "planned",
+            "amount": 75,
+            "note": "Invoice #207, pending. Six-month lap-seal plan."
+          },
+          {
+            "date": "2026-10-30",
+            "title": "Flush",
+            "status": "planned",
+            "amount": null,
+            "note": "On the calendar Oct 30. No price on the schedule yet."
+          }
+        ]
       },
       "james-april": {
         "name": "James & April",
@@ -361,17 +589,137 @@
         "PAY_LINK": "",
         "INVOICE_LINK": "",
         "ESTIMATE_LINK": "",
-        "RECEIPT_LINK": "https://quoteiq-2.web.app/invoices/lZLLttkd3IubcNTEvMe0"
+        "RECEIPT_LINK": "https://quoteiq-2.web.app/invoices/lZLLttkd3IubcNTEvMe0",
+        "notes": "All QI invoices Paid (newest #149 Jul). No open estimate. Pay/Invoice/Estimate muted until new docs exist.",
+        "trailer": {
+          "year": "",
+          "make": "",
+          "model": "",
+          "length_ft": "",
+          "type": "",
+          "data_plate_photos": [],
+          "warranty_provider": "",
+          "warranty_expiry": "",
+          "systems": {
+            "ac": "Two roof units serviced 2026-07-24 (invoice #149).",
+            "wh": "",
+            "solar": ""
+          },
+          "parked": "3397 U.S. 259, Henderson, TX 75652",
+          "seed_note": "Placeholder rig except AC and parked. AC is from invoice #149. Parked is the address on that invoice. Year, make, model, length, type, warranty, water heater, and solar were not on the QuoteIQ contact (2026-10-26)."
+        },
+        "work_log": [
+          {
+            "date": "2026-05-15",
+            "title": "Invoice #116",
+            "status": "done",
+            "amount": 327.29,
+            "note": "Paid."
+          },
+          {
+            "date": "2026-07-24",
+            "title": "AC clean — two units",
+            "status": "done",
+            "amount": 258.75,
+            "note": "Invoice #149, paid. First unit $175, additional unit $75, card fee in the total."
+          }
+        ]
       },
       "blake-wilson": {
         "name": "Blake Wilson",
-        "tier": "",
-        "hours": 0,
+        "tier": "premium",
+        "hours": 3,
+        "hours_note": "Demo midpoint so the free-trip bar reads 3 of 6. Not a QuoteIQ hour balance.",
         "qi_customer_id": "1i5Q6WXXRt71uKW1GaDp",
         "PAY_LINK": "",
         "INVOICE_LINK": "",
         "ESTIMATE_LINK": "https://quoteiq-2.web.app/estimates/83SuTYjCMII7ILtyRvzK",
-        "RECEIPT_LINK": "https://quoteiq-2.web.app/invoices/83SuTYjCMII7ILtyRvzK"
+        "RECEIPT_LINK": "https://quoteiq-2.web.app/invoices/83SuTYjCMII7ILtyRvzK",
+        "notes": "Invoice #197 Paid (was estimate #127). Pay/Invoice muted (no open balance). tier premium is the v2 demo.",
+        "trailer": {
+          "year": "",
+          "make": "",
+          "model": "",
+          "length_ft": "",
+          "type": "",
+          "data_plate_photos": [],
+          "warranty_provider": "",
+          "warranty_expiry": "",
+          "systems": {
+            "ac": "",
+            "wh": "",
+            "solar": ""
+          },
+          "parked": "5059 FM 225, Henderson, Texas 75654",
+          "seed_note": "Placeholder rig. Year, make, model, length, type, warranty, and systems were not on the QuoteIQ contact (2026-10-26). Parked is the address on invoice #197."
+        },
+        "work_log": [
+          {
+            "date": "2026-09-28",
+            "title": "Skylight, camp kitchen door, and slide roof",
+            "status": "done",
+            "amount": 1425,
+            "note": "Invoice #197, paid. Service call, skylight, fiberglass repair, and EPDM patch."
+          }
+        ]
+      },
+      "lisa": {
+        "name": "Lisa",
+        "tier": "premium",
+        "hours": 2.5,
+        "qi_customer_id": "",
+        "PAY_LINK": "",
+        "INVOICE_LINK": "",
+        "ESTIMATE_LINK": "",
+        "RECEIPT_LINK": "",
+        "hours_note": "Demo stub so the free-trip bar reads 2.5 of 6. Not a QuoteIQ hour balance.",
+        "notes": "Family beta — Premium demo. Mitch yes 2026-10-26. QI links TBD Elmer/Cobs.",
+        "trailer": {
+          "year": "",
+          "make": "",
+          "model": "",
+          "length_ft": "",
+          "type": "",
+          "data_plate_photos": [],
+          "warranty_provider": "",
+          "warranty_expiry": "",
+          "systems": {
+            "ac": "",
+            "wh": "",
+            "solar": ""
+          },
+          "parked": ""
+        },
+        "work_log": []
+      },
+      "don-francis": {
+        "name": "Don Francis",
+        "tier": "basic",
+        "hours": 4,
+        "qi_customer_id": "",
+        "PAY_LINK": "",
+        "INVOICE_LINK": "",
+        "ESTIMATE_LINK": "",
+        "RECEIPT_LINK": "",
+        "hours_note": "Demo stub so the free-trip bar reads 4 of 9. Not a QuoteIQ hour balance.",
+        "notes": "Family beta — Basic demo. Mitch yes 2026-10-26. QI links TBD Elmer/Cobs.",
+        "trailer": {
+          "year": "",
+          "make": "",
+          "model": "",
+          "length_ft": "",
+          "type": "",
+          "data_plate_photos": [],
+          "warranty_provider": "",
+          "warranty_expiry": "",
+          "systems": {
+            "ac": "",
+            "wh": "",
+            "solar": ""
+          },
+          "parked": ""
+        },
+        "work_log": []
       }
     };
     var TIERS = {
@@ -485,9 +833,562 @@
     var P = params();
     var memberCode = P.get("m").toLowerCase().replace(/[^a-z0-9-]/g, "");
 
+    var JUNE = "mmrv+june@mail.grokbot.com";
+    var SELF_QUOTE = "https://mmrvsolar.com/self-quote";
+    var SELF_QUOTE_ADMIN = "https://selfquote.grok.me/admin";
+    var SELF_QUOTE_ADMIN_PRETTY = "https://mmrvsolar.com/self-quote/admin";
+    var TRAILER_PREFIX = "mmrv-portal-trailer:";
+    var currentRecord = null;
+    var trailerDirty = false;
+    var localPlates = [];
+
+    function resolvedTier(rec) {
+      var tier = String(P.get("tier") || (rec && rec.tier) || "").toLowerCase();
+      return TIERS[tier] ? tier : "";
+    }
+
+    function resolvedHours(rec, tier) {
+      if (P.get("hrs") !== "") return parseFloat(P.get("hrs"));
+      return (rec && rec.hours) || STUB_HOURS[tier] || 0;
+    }
+
+    function blankTrailer() {
+      return {
+        year: "", make: "", model: "", length_ft: "", type: "",
+        data_plate_photos: [],
+        warranty_provider: "", warranty_expiry: "",
+        systems: { ac: "", wh: "", solar: "" },
+        parked: ""
+      };
+    }
+
+    function normalizeTrailer(raw) {
+      var base = blankTrailer();
+      var t = raw && typeof raw === "object" ? raw : {};
+      ["year", "make", "model", "length_ft", "type", "warranty_provider", "warranty_expiry", "parked"].forEach(function (key) {
+        if (t[key] != null) base[key] = String(t[key]).replace(/[\u0000-\u001F]/g, "").trim();
+      });
+      if (base.type !== "TT" && base.type !== "5th" && base.type !== "MH") base.type = "";
+      base.length_ft = base.length_ft.replace(/[^0-9.]/g, "").slice(0, 6);
+      base.year = base.year.replace(/[^0-9]/g, "").slice(0, 4);
+      var systems = t.systems && typeof t.systems === "object" ? t.systems : {};
+      base.systems.ac = String(systems.ac || "").replace(/[\u0000-\u001F]/g, "").trim().slice(0, 160);
+      base.systems.wh = String(systems.wh || "").replace(/[\u0000-\u001F]/g, "").trim().slice(0, 160);
+      base.systems.solar = String(systems.solar || "").replace(/[\u0000-\u001F]/g, "").trim().slice(0, 160);
+      ["make", "model", "warranty_provider", "parked"].forEach(function (key) {
+        base[key] = base[key].slice(0, key === "parked" ? 160 : 80);
+      });
+      base.warranty_expiry = base.warranty_expiry.slice(0, 40);
+      base.data_plate_photos = Array.isArray(t.data_plate_photos) ? t.data_plate_photos.slice(0, 8) : [];
+      return base;
+    }
+
+    function readLocalTrailer() {
+      if (!memberCode) return null;
+      try {
+        var parsed = JSON.parse(storageGet(TRAILER_PREFIX + memberCode) || "null");
+        return parsed && typeof parsed === "object" ? parsed : null;
+      } catch (err) { return null; }
+    }
+
+    function trailerFor(rec) {
+      var base = normalizeTrailer(rec && rec.trailer);
+      var local = readLocalTrailer();
+      if (!local) return base;
+      var over = normalizeTrailer(local);
+      over.data_plate_photos = base.data_plate_photos;
+      return over;
+    }
+
+    function field(id) {
+      var el = document.getElementById(id);
+      return el ? String(el.value || "") : "";
+    }
+
+    function readFormTrailer() {
+      return normalizeTrailer({
+        year: field("tr-year"),
+        make: field("tr-make"),
+        model: field("tr-model"),
+        length_ft: field("tr-length"),
+        type: field("tr-type"),
+        parked: field("tr-parked"),
+        warranty_provider: field("tr-warranty"),
+        warranty_expiry: field("tr-expiry"),
+        systems: { ac: field("tr-ac"), wh: field("tr-wh"), solar: field("tr-solar") },
+        data_plate_photos: (currentRecord && currentRecord.trailer && currentRecord.trailer.data_plate_photos) || []
+      });
+    }
+
+    function fillTrailerForm(trailer) {
+      document.getElementById("tr-year").value = trailer.year;
+      document.getElementById("tr-make").value = trailer.make;
+      document.getElementById("tr-model").value = trailer.model;
+      document.getElementById("tr-length").value = trailer.length_ft;
+      document.getElementById("tr-type").value = trailer.type;
+      document.getElementById("tr-parked").value = trailer.parked;
+      document.getElementById("tr-warranty").value = trailer.warranty_provider;
+      document.getElementById("tr-expiry").value = trailer.warranty_expiry;
+      document.getElementById("tr-ac").value = trailer.systems.ac;
+      document.getElementById("tr-wh").value = trailer.systems.wh;
+      document.getElementById("tr-solar").value = trailer.systems.solar;
+    }
+
+    function setTrailerStatus(text) {
+      document.getElementById("trailer-status").textContent = text || "";
+    }
+
+    function guestLabel() {
+      var typed = cleanName(field("guest-name"));
+      if (typed) return typed;
+      return (currentRecord && currentRecord.name) || memberCode || "portal guest";
+    }
+
+    function coachTypeParam(type) {
+      if (type === "TT") return "travel_trailer";
+      if (type === "5th") return "fifth_wheel";
+      return "";
+    }
+
+    function systemsLine(trailer) {
+      var parts = [];
+      if (trailer.systems.ac) parts.push("AC: " + trailer.systems.ac);
+      if (trailer.systems.wh) parts.push("WH: " + trailer.systems.wh);
+      if (trailer.systems.solar) parts.push("Solar: " + trailer.systems.solar);
+      return parts.join("; ");
+    }
+
+    function activeTrailer() {
+      if (trailerDirty) return readFormTrailer();
+      return trailerFor(currentRecord);
+    }
+
+    function selfQuoteUrl(rec, tier) {
+      var trailer = activeTrailer();
+      var q = new URLSearchParams();
+      function put(key, value) {
+        var text = String(value || "").trim();
+        if (text) q.set(key, text.slice(0, 180));
+      }
+      put("m", memberCode);
+      put("tier", tier);
+      put("year", trailer.year);
+      put("make", trailer.make);
+      put("model", trailer.model);
+      put("type", trailer.type);
+      put("coachType", coachTypeParam(trailer.type));
+      put("lengthFt", trailer.length_ft);
+      put("address", trailer.parked);
+      put("systems", systemsLine(trailer));
+      var query = q.toString();
+      return query ? SELF_QUOTE + "?" + query : SELF_QUOTE;
+    }
+
+    function quoteCopy(tier) {
+      if (tier === "premium") {
+        return {
+          strip: "Member prices applied. You save $25 an hour on labor versus rack.",
+          note: "Opens the price menu with your rig details on the link."
+        };
+      }
+      if (tier === "basic") {
+        return {
+          strip: "Member prices applied. You save $10 an hour on labor versus rack.",
+          note: "Opens the price menu with your rig details on the link."
+        };
+      }
+      if (tier === "var") {
+        return {
+          strip: "Member prices applied. You save $39 on your first ticket.",
+          note: "Opens the price menu with your rig details on the link."
+        };
+      }
+      return {
+        strip: "Rack prices. Members save $10 an hour (Basic) or $25 an hour (Premium) on labor.",
+        note: "Opens the public price menu. Travel is added after the address is mapped."
+      };
+    }
+
+    function paintQuote(rec, tier) {
+      var copy = quoteCopy(tier);
+      document.getElementById("quote-strip").textContent = copy.strip;
+      document.getElementById("quote-note").textContent = copy.note;
+      var link = document.getElementById("tap-quote");
+      link.href = selfQuoteUrl(rec, tier);
+    }
+
+    function money(amount) {
+      if (amount === null || amount === undefined || amount === "") return "Price not on file yet";
+      var value = Number(amount);
+      if (!isFinite(value)) return "Price not on file yet";
+      return value.toLocaleString("en-US", { style: "currency", currency: "USD" });
+    }
+
+    function showDate(iso) {
+      var match = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(iso || ""));
+      if (!match) return "";
+      var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+      return months[Number(match[2]) - 1] + " " + Number(match[3]) + ", " + match[1];
+    }
+
+    function paintLog(listId, rows, emptyCopy) {
+      var list = document.getElementById(listId);
+      list.innerHTML = "";
+      if (!rows.length) {
+        var empty = document.createElement("li");
+        empty.textContent = emptyCopy;
+        list.appendChild(empty);
+        return;
+      }
+      rows.forEach(function (row) {
+        var item = document.createElement("li");
+        if (row.status === "done") item.className = "is-done";
+        var top = document.createElement("div");
+        top.className = "top";
+        var title = document.createElement("span");
+        title.textContent = row.title || "Work";
+        var amt = document.createElement("span");
+        amt.className = "amt";
+        amt.textContent = money(row.amount);
+        top.appendChild(title);
+        top.appendChild(amt);
+        var meta = document.createElement("div");
+        meta.className = "meta";
+        var when = showDate(row.date);
+        meta.textContent = (when ? when + " · " : "") + (row.status === "done" ? "Done" : "Planned");
+        item.appendChild(top);
+        item.appendChild(meta);
+        if (row.note) {
+          var note = document.createElement("div");
+          note.className = "meta";
+          note.textContent = row.note;
+          item.appendChild(note);
+        }
+        list.appendChild(item);
+      });
+    }
+
+    function paintWork(rec, tier, hours) {
+      var block = document.getElementById("work-block");
+      if (!rec) { block.hidden = true; return; }
+      block.hidden = false;
+      var intro = document.getElementById("work-intro");
+      var goal = TIERS[tier] && TIERS[tier].goal;
+      intro.textContent = goal
+        ? "Done and what’s still planned, with the price. Free-trip hours are on the membership card above (" + (isNaN(hours) ? 0 : hours) + " of " + goal + ")."
+        : "Done and what’s still planned, with the price.";
+      var rows = Array.isArray(rec.work_log) ? rec.work_log.filter(function (row) {
+        return row && (row.status === "done" || row.status === "planned");
+      }) : [];
+      var planned = rows.filter(function (row) { return row.status === "planned"; }).slice().sort(function (a, b) {
+        return String(a.date || "").localeCompare(String(b.date || ""));
+      });
+      var done = rows.filter(function (row) { return row.status === "done"; }).slice().sort(function (a, b) {
+        return String(b.date || "").localeCompare(String(a.date || ""));
+      });
+      paintLog("work-planned", planned, "Nothing planned right now.");
+      paintLog("work-done", done, "Nothing finished is on this card yet.");
+    }
+
+    function paintPlates() {
+      var list = document.getElementById("plate-list");
+      list.innerHTML = "";
+      var seeded = (currentRecord && currentRecord.trailer && currentRecord.trailer.data_plate_photos) || [];
+      seeded.forEach(function (photo) {
+        var label = typeof photo === "string" ? photo : (photo && (photo.name || photo.url)) || "";
+        if (!label) return;
+        var row = document.createElement("div");
+        row.className = "plate";
+        var text = document.createElement("div");
+        text.className = "grow";
+        text.textContent = "On file: " + label;
+        row.appendChild(text);
+        list.appendChild(row);
+      });
+      localPlates.forEach(function (photo) {
+        var row = document.createElement("div");
+        row.className = "plate";
+        var img = document.createElement("img");
+        img.alt = "Data plate preview";
+        img.src = photo.url;
+        var text = document.createElement("div");
+        text.className = "grow";
+        text.textContent = photo.name;
+        var download = document.createElement("button");
+        download.type = "button";
+        download.textContent = "Download";
+        download.addEventListener("click", function () { downloadBlob(photo.blob, photo.name); });
+        var remove = document.createElement("button");
+        remove.type = "button";
+        remove.textContent = "Remove";
+        remove.addEventListener("click", function () { removePlate(photo.id); });
+        row.appendChild(img);
+        row.appendChild(text);
+        row.appendChild(download);
+        row.appendChild(remove);
+        list.appendChild(row);
+      });
+      if (!seeded.length && !localPlates.length) {
+        var empty = document.createElement("p");
+        empty.className = "sub";
+        empty.textContent = "No data plate photo on file yet.";
+        list.appendChild(empty);
+      }
+    }
+
+    function plateDb() {
+      if (!window.indexedDB) return Promise.reject(new Error("no-idb"));
+      return new Promise(function (resolve, reject) {
+        var req = indexedDB.open("mmrv-portal-v2", 1);
+        req.onupgradeneeded = function () {
+          if (!req.result.objectStoreNames.contains("plates")) req.result.createObjectStore("plates");
+        };
+        req.onsuccess = function () { resolve(req.result); };
+        req.onerror = function () { reject(req.error); };
+      });
+    }
+
+    function plateKey(id) { return memberCode + ":" + id; }
+
+    function storePlate(photo) {
+      return plateDb().then(function (db) {
+        return new Promise(function (resolve, reject) {
+          var tx = db.transaction("plates", "readwrite");
+          tx.objectStore("plates").put({
+            id: photo.id, member: memberCode, name: photo.name, type: photo.type, blob: photo.blob
+          }, plateKey(photo.id));
+          tx.oncomplete = function () { resolve(); };
+          tx.onerror = function () { reject(tx.error); };
+        });
+      });
+    }
+
+    function deleteStoredPlate(id) {
+      return plateDb().then(function (db) {
+        return new Promise(function (resolve, reject) {
+          var tx = db.transaction("plates", "readwrite");
+          tx.objectStore("plates").delete(plateKey(id));
+          tx.oncomplete = function () { resolve(); };
+          tx.onerror = function () { reject(tx.error); };
+        });
+      }).catch(function () {});
+    }
+
+    function loadStoredPlates() {
+      localPlates.forEach(function (photo) { if (photo.url) URL.revokeObjectURL(photo.url); });
+      localPlates = [];
+      if (!memberCode) { paintPlates(); return; }
+      plateDb().then(function (db) {
+        return new Promise(function (resolve, reject) {
+          var tx = db.transaction("plates", "readonly");
+          var req = tx.objectStore("plates").getAll();
+          req.onsuccess = function () { resolve(req.result || []); };
+          req.onerror = function () { reject(req.error); };
+        });
+      }).then(function (rows) {
+        localPlates = rows.filter(function (row) { return row && row.member === memberCode && row.blob; }).map(function (row) {
+          return { id: row.id, name: row.name || "data-plate.jpg", type: row.type || row.blob.type, blob: row.blob, url: URL.createObjectURL(row.blob) };
+        });
+        paintPlates();
+      }).catch(function () { paintPlates(); });
+    }
+
+    function removePlate(id) {
+      localPlates = localPlates.filter(function (photo) {
+        if (photo.id !== id) return true;
+        if (photo.url) URL.revokeObjectURL(photo.url);
+        return false;
+      });
+      deleteStoredPlate(id);
+      paintPlates();
+    }
+
+    function addPlateFiles(fileList) {
+      var skipped = "";
+      Array.prototype.forEach.call(fileList || [], function (file) {
+        if (!file) return;
+        if (file.type && file.type.indexOf("image/") !== 0) {
+          skipped = file.name + " is not an image.";
+          return;
+        }
+        if (file.size > 8 * 1024 * 1024) {
+          skipped = file.name + " is over 8 MB. Use a smaller photo.";
+          return;
+        }
+        if (localPlates.length >= 4) {
+          skipped = "Four photos is the day-one limit.";
+          return;
+        }
+        var photo = {
+          id: Date.now().toString(36) + Math.random().toString(16).slice(2),
+          name: (file.name || "data-plate.jpg").replace(/[^\w.\- ]+/g, "").slice(0, 80) || "data-plate.jpg",
+          type: file.type || "image/jpeg",
+          blob: file,
+          url: URL.createObjectURL(file)
+        };
+        localPlates.push(photo);
+        storePlate(photo).catch(function () {
+          setTrailerStatus("Photo is held on this page until you leave. This browser did not keep a copy.");
+        });
+      });
+      paintPlates();
+      if (skipped) setTrailerStatus(skipped);
+      else if (localPlates.length) setTrailerStatus("Photo ready. Email it to " + JUNE + " so the shop can file it.");
+      var input = document.getElementById("tr-plate");
+      if (input) input.value = "";
+    }
+
+    function downloadBlob(blob, name) {
+      var link = document.createElement("a");
+      var url = URL.createObjectURL(blob);
+      link.href = url;
+      link.download = name || "data-plate.jpg";
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      setTimeout(function () { URL.revokeObjectURL(url); }, 2500);
+    }
+
+    function rigBody(trailer) {
+      var names = localPlates.map(function (photo) { return photo.name; });
+      return [
+        "Portal rig update. Elmer same-day QuoteIQ queue — this is not a live write.",
+        "Member: " + (memberCode || "(none)"),
+        "Name: " + guestLabel(),
+        "Year: " + (trailer.year || "(blank)"),
+        "Make: " + (trailer.make || "(blank)"),
+        "Model: " + (trailer.model || "(blank)"),
+        "Length ft: " + (trailer.length_ft || "(blank)"),
+        "Type: " + (trailer.type || "(blank)"),
+        "Parked: " + (trailer.parked || "(blank)"),
+        "Warranty: " + (trailer.warranty_provider || "(blank)") + (trailer.warranty_expiry ? " exp " + trailer.warranty_expiry : ""),
+        "AC: " + (trailer.systems.ac || "(blank)"),
+        "Water heater: " + (trailer.systems.wh || "(blank)"),
+        "Solar: " + (trailer.systems.solar || "(blank)"),
+        "Data plate files to attach: " + (names.length ? names.join(", ") : "(none this send)"),
+        "Static GitHub Pages does not store the photo. File it in Drive from this email.",
+        "To: " + JUNE,
+        "Shop inbox: " + SELF_QUOTE_ADMIN,
+        "Pretty inbox path: " + SELF_QUOTE_ADMIN_PRETTY
+      ].join("\n");
+    }
+
+    function openMail(subject, body) {
+      window.location.href = "mailto:" + JUNE + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+    }
+
+    function saveTrailerLocal() {
+      if (!memberCode) {
+        setTrailerStatus("Open your portal link first, then save the rig.");
+        return false;
+      }
+      var trailer = readFormTrailer();
+      storageSet(TRAILER_PREFIX + memberCode, JSON.stringify(trailer));
+      trailerDirty = false;
+      setTrailerStatus("Saved on this phone. Email the shop when you want it filed.");
+      paintQuote(currentRecord, resolvedTier(currentRecord));
+      return true;
+    }
+
+    function sendRig() {
+      if (!saveTrailerLocal()) return;
+      var trailer = readFormTrailer();
+      var body = rigBody(trailer);
+      var subject = "Rig update — " + guestLabel() + (memberCode ? " (" + memberCode + ")" : "");
+      function fallbackMail(prefix) {
+        openMail(subject, body);
+        setTrailerStatus(prefix + "Email opened to " + JUNE + ". Attach the data plate photo if you added one.");
+      }
+      if (localPlates.length && navigator.canShare) {
+        try {
+          var files = localPlates.map(function (photo) {
+            return new File([photo.blob], photo.name, { type: photo.type || "image/jpeg" });
+          });
+          if (navigator.canShare({ files: files })) {
+            navigator.share({ files: files, title: subject, text: body }).then(function () {
+              setTrailerStatus("Share sheet opened. Send the photo to " + JUNE + ".");
+            }).catch(function (err) {
+              if (err && err.name === "AbortError") return;
+              fallbackMail("");
+            });
+            return;
+          }
+        } catch (err) {}
+      }
+      if (localPlates.length === 1) downloadBlob(localPlates[0].blob, localPlates[0].name);
+      fallbackMail(localPlates.length ? "Photo download started when the browser allows it. " : "");
+    }
+
+    function paintTrailer(rec) {
+      var block = document.getElementById("trailer-block");
+      if (!rec) { block.hidden = true; return; }
+      block.hidden = false;
+      if (!trailerDirty) {
+        fillTrailerForm(trailerFor(rec));
+        if (readLocalTrailer()) setTrailerStatus("Showing edits saved on this phone.");
+      }
+      paintPlates();
+    }
+
+    function requestTime(event) {
+      event.preventDefault();
+      var when = field("time-when").replace(/[\u0000-\u001F]/g, "").trim().slice(0, 120);
+      var note = field("time-note").replace(/[\u0000-\u001F]/g, "").trim().slice(0, 400);
+      if (!when) {
+        document.getElementById("time-status").textContent = "Add a day or time window first.";
+        document.getElementById("time-when").focus();
+        return;
+      }
+      var trailer = activeTrailer();
+      var tier = resolvedTier(currentRecord);
+      var body = [
+        "Portal time request. Not a booked appointment.",
+        "Member: " + (memberCode || "(none)"),
+        "Name: " + guestLabel(),
+        "Tier: " + (tier || "none"),
+        "When: " + when,
+        "Note: " + (note || "(none)"),
+        "Rig: " + [trailer.year, trailer.make, trailer.model, trailer.type, trailer.length_ft ? trailer.length_ft + " ft" : ""].filter(Boolean).join(" ") || "(not on file)",
+        "Parked: " + (trailer.parked || "(blank)"),
+        "Systems: " + (systemsLine(trailer) || "(blank)"),
+        "Self-quote: " + selfQuoteUrl(currentRecord, tier),
+        "June will message the guest to confirm.",
+        "To: " + JUNE,
+        "Shop inbox: " + SELF_QUOTE_ADMIN,
+        "Pretty inbox path: " + SELF_QUOTE_ADMIN_PRETTY
+      ].join("\n");
+      openMail("Time request — " + guestLabel() + (memberCode ? " (" + memberCode + ")" : ""), body);
+      document.getElementById("time-status").textContent = "Email opened to " + JUNE + ". June will message you to confirm. Shop inbox: " + SELF_QUOTE_ADMIN + ".";
+    }
+
+    function bindTrailerInputs() {
+      ["tr-year", "tr-make", "tr-model", "tr-length", "tr-type", "tr-parked", "tr-warranty", "tr-expiry", "tr-ac", "tr-wh", "tr-solar"].forEach(function (id) {
+        document.getElementById(id).addEventListener("input", function () {
+          trailerDirty = true;
+          paintQuote(currentRecord, resolvedTier(currentRecord));
+        });
+        document.getElementById(id).addEventListener("change", function () {
+          trailerDirty = true;
+          paintQuote(currentRecord, resolvedTier(currentRecord));
+        });
+      });
+    }
+
+    function initV2() {
+      bindTrailerInputs();
+      document.getElementById("tr-plate").addEventListener("change", function (event) {
+        addPlateFiles(event.target.files);
+      });
+      document.getElementById("trailer-save").addEventListener("click", saveTrailerLocal);
+      document.getElementById("trailer-send").addEventListener("click", sendRig);
+      document.getElementById("time-form").addEventListener("submit", requestTime);
+      loadStoredPlates();
+    }
+
     function applyMember(members) {
       var rec = memberCode && members && Object.prototype.hasOwnProperty.call(members, memberCode) ? members[memberCode] : null;
       var r = rec || {};
+      currentRecord = rec;
       applyLink("tap-pay", r.PAY_LINK, "Link coming by text.");
       applyLink("tap-invoice", r.INVOICE_LINK, "Link coming by text.");
       applyLink("tap-estimate", r.ESTIMATE_LINK, "Link coming by text.");
@@ -495,9 +1396,12 @@
       document.getElementById("empty").hidden = !!rec;
       var input = document.getElementById("guest-name");
       if (rec && rec.name && !input.value) input.value = rec.name;
-      var tier = String(P.get("tier") || r.tier || "").toLowerCase();
-      var hours = P.get("hrs") !== "" ? parseFloat(P.get("hrs")) : (r.hours || STUB_HOURS[tier] || 0);
-      paintMember(TIERS[tier] ? tier : "", rec ? rec.name : "", hours);
+      var tier = resolvedTier(rec);
+      var hours = resolvedHours(rec, tier);
+      paintMember(tier, rec ? rec.name : "", hours);
+      paintTrailer(rec);
+      paintWork(rec, tier, hours);
+      paintQuote(rec, tier);
     }
 
     function paintMember(tier, name, hours) {
@@ -607,6 +1511,7 @@
     initName();
     initPayFail();
     initGallery();
+    initV2();
     applyMember(MEMBERS_FALLBACK);
     if (memberCode && window.fetch && location.protocol !== "file:") {
       fetch("members.json", { cache: "no-store" }).then(function (r) { return r.ok ? r.json() : null; })
