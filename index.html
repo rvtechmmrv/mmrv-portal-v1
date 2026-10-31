@@ -237,6 +237,9 @@
     .bar{height:8px;background:var(--muted-bg);border-radius:6px;overflow:hidden;margin-top:6px}
     .bar span{display:block;height:100%;background:var(--gold)}
     .paywarn{background:var(--off-bg);border:1px solid var(--gold);border-radius:12px;padding:10px 12px;margin:0 0 12px;color:var(--gold-deep)}
+    .terms { margin: 0 0 14px; }
+    .terms[hidden] { display: none; }
+    .terms .panel p + p { margin-top: 12px; }
     .empty{background:var(--muted-bg);border-radius:12px;padding:10px 12px;margin:0 0 12px;color:var(--ink-soft);font-size:.95rem}
     .gallery{margin-top:22px}
     .gallery h2{font-size:1.15rem;margin:0 0 4px}
@@ -365,6 +368,18 @@
       <p id="m-rate"></p>
       <div id="m-prog"><p id="m-prog-text"></p><div class="bar"><span id="m-bar"></span></div></div>
     </section>
+    <div class="terms" id="terms" hidden>
+      <button type="button" class="tap" id="terms-toggle" aria-expanded="false" aria-controls="terms-panel">
+        <span class="tap-label">Membership terms</span>
+        <span class="tap-note" id="terms-note">Tap to read.</span>
+      </button>
+      <div class="panel" id="terms-panel" hidden>
+        <p><strong>Canceling.</strong> Give us notice before the next monthly pull. Hours you've banked toward a free service call are forfeited when you cancel. No cash out.</p>
+        <p><strong>Missed payment.</strong> If the card doesn't go through, a failed-payment banner shows on this page. Member perks pause until it's paid. Banked hours hold for 30 days, then they're forfeited if it's still unpaid.</p>
+        <p><strong>Service area.</strong> The free service-call credit applies inside the normal service-call area — about $75, about 45 miles. Outside that, mileage is charged as usual. The credit does not waive the extra miles.</p>
+        <p><strong>What the free service call covers.</strong> It covers the $75 trip only, on one visit. Labor, parts, after-hours, and a return trip for a new issue still bill normally.</p>
+      </div>
+    </div>
     <p class="empty" id="empty" hidden>Your personal links will show here once Mitch sends your portal link. Questions? Call or text below.</p>
 
     <div class="taps">
@@ -673,24 +688,40 @@
         "ESTIMATE_LINK": "",
         "RECEIPT_LINK": "",
         "hours_note": "Demo stub so the free-trip bar reads 2.5 of 6. Not a QuoteIQ hour balance.",
-        "notes": "Family beta — Premium demo. Mitch yes 2026-10-26. QI links TBD Elmer/Cobs.",
+        "notes": "Family beta — Premium demo. Mitch yes 2026-10-26. QI links TBD Elmer/Cobs. Trailer and work log are demo fills so the page isn't empty.",
         "trailer": {
-          "year": "",
-          "make": "",
-          "model": "",
-          "length_ft": "",
-          "type": "",
+          "year": "2021",
+          "make": "Grand Design",
+          "model": "Imagine 2800BH",
+          "length_ft": "32",
+          "type": "TT",
           "data_plate_photos": [],
-          "warranty_provider": "",
-          "warranty_expiry": "",
+          "warranty_provider": "Grand Design",
+          "warranty_expiry": "2027-06-01",
           "systems": {
-            "ac": "",
-            "wh": "",
-            "solar": ""
+            "ac": "15k ducted roof unit",
+            "wh": "6-gallon gas/electric",
+            "solar": "200W suitcase"
           },
-          "parked": ""
+          "parked": "Henderson, TX",
+          "seed_note": "Demo rig for the Premium family beta so the card isn't empty. Not from QuoteIQ (2026-10-26). QI links TBD Elmer/Cobs."
         },
-        "work_log": []
+        "work_log": [
+          {
+            "date": "2026-09-04",
+            "title": "Roof AC service",
+            "status": "done",
+            "amount": 185,
+            "note": "Demo line. One roof unit cleaned and checked. Not a QuoteIQ invoice."
+          },
+          {
+            "date": "2026-11-07",
+            "title": "Seal check before a trip",
+            "status": "planned",
+            "amount": 150,
+            "note": "Demo line. $75 service call plus labor. Not booked yet."
+          }
+        ]
       },
       "don-francis": {
         "name": "Don Francis",
@@ -702,24 +733,40 @@
         "ESTIMATE_LINK": "",
         "RECEIPT_LINK": "",
         "hours_note": "Demo stub so the free-trip bar reads 4 of 9. Not a QuoteIQ hour balance.",
-        "notes": "Family beta — Basic demo. Mitch yes 2026-10-26. QI links TBD Elmer/Cobs.",
+        "notes": "Family beta — Basic demo. Mitch yes 2026-10-26. QI links TBD Elmer/Cobs. Trailer and work log are demo fills so the page isn't empty.",
         "trailer": {
-          "year": "",
-          "make": "",
-          "model": "",
-          "length_ft": "",
-          "type": "",
+          "year": "2018",
+          "make": "Grand Design",
+          "model": "Reflection 150 Series",
+          "length_ft": "31",
+          "type": "5th",
           "data_plate_photos": [],
-          "warranty_provider": "",
-          "warranty_expiry": "",
+          "warranty_provider": "Expired (demo)",
+          "warranty_expiry": "2023-05-01",
           "systems": {
-            "ac": "",
-            "wh": "",
-            "solar": ""
+            "ac": "13.5k roof unit",
+            "wh": "Suburban 6-gallon",
+            "solar": "None on the roof"
           },
-          "parked": ""
+          "parked": "Henderson, TX",
+          "seed_note": "Demo rig for the Basic family beta so the card isn't empty. Not from QuoteIQ (2026-10-26). QI links TBD Elmer/Cobs."
         },
-        "work_log": []
+        "work_log": [
+          {
+            "date": "2026-06-20",
+            "title": "Water heater service",
+            "status": "done",
+            "amount": 240,
+            "note": "Demo line. Anode and flush. Not a QuoteIQ invoice."
+          },
+          {
+            "date": "2026-11-18",
+            "title": "Slide adjustment",
+            "status": "planned",
+            "amount": 125,
+            "note": "Demo line. Labor after the service call. Not booked yet."
+          }
+        ]
       }
     };
     var TIERS = {
@@ -1404,8 +1451,19 @@
       paintQuote(rec, tier);
     }
 
+    function paintTerms(tier) {
+      var terms = document.getElementById("terms");
+      var show = tier === "basic" || tier === "premium";
+      terms.hidden = !show;
+      if (show) return;
+      document.getElementById("terms-toggle").setAttribute("aria-expanded", "false");
+      document.getElementById("terms-panel").hidden = true;
+      document.getElementById("terms-note").textContent = "Tap to read.";
+    }
+
     function paintMember(tier, name, hours) {
       var box = document.getElementById("member");
+      paintTerms(tier);
       if (!tier) { box.hidden = true; return; }
       var t = TIERS[tier];
       box.hidden = false;
@@ -1506,6 +1564,16 @@
       nextButton.setAttribute("aria-expanded", open ? "false" : "true");
       nextPanel.hidden = open;
       nextNote.textContent = open ? "Tap to read." : "Tap to close.";
+    });
+
+    var termsButton = document.getElementById("terms-toggle");
+    var termsPanel = document.getElementById("terms-panel");
+    var termsNote = document.getElementById("terms-note");
+    termsButton.addEventListener("click", function () {
+      var open = termsButton.getAttribute("aria-expanded") === "true";
+      termsButton.setAttribute("aria-expanded", open ? "false" : "true");
+      termsPanel.hidden = open;
+      termsNote.textContent = open ? "Tap to read." : "Tap to close.";
     });
 
     initName();

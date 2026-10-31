@@ -11,7 +11,7 @@ QI customer ids: James/April `9Oyz2c4MZUGz84rS5Aqf` · Blake `1i5Q6WXXRt71uKW1Ga
 
 v2 (2026-10-26): the same three URLs also show Your rig, Work on this coach, and Self-quote. Blake is `tier: premium` with `hours: 3` (demo midpoint). Paula and James/April stay `tier: ""`. Rig year/make/model are blank on purpose — QuoteIQ did not have them. Work-log dollars are from the invoices and estimates named in `members.json`.
 
-Family beta added 2026-10-26 ~2:42 CT (Mitch yes via June). No QuoteIQ ids or guest links yet. Hours are demo stubs, not QI balances.
+Family beta added 2026-10-26 ~2:42 CT (Mitch yes via June). No QuoteIQ ids or guest links yet. Hours are demo stubs, not QI balances. Trailer fields and the work log are demo fills (one done line, one planned line, with a price) so those pages aren’t blank. QI links stay empty — TBD Elmer/Cobs.
 
 | Code | Guest | Portal URL | Tier | Hours |
 |---|---|---|---|---|
