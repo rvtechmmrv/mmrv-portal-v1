@@ -48,7 +48,7 @@
     .wrap {
       width: min(420px, 100%);
       margin: 0 auto;
-      padding: 18px 16px 32px;
+      padding: 18px 16px calc(88px + env(safe-area-inset-bottom));
     }
 
     .logo {
@@ -341,6 +341,109 @@
     .plate button { font: inherit; min-height: 44px; padding: 8px 10px; border-radius: 10px; border: 1px solid var(--line); background: var(--paper); }
     .status { min-height: 1.3em; margin: 8px 0 0; color: var(--gold-deep); font-size: 0.95rem; }
     .time-form { margin-top: 12px; display: flex; flex-direction: column; gap: 10px; }
+
+    .start-here {
+      background: var(--paper);
+      border: 1.5px solid var(--line);
+      border-left: 6px solid var(--gold);
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin: 0 0 14px;
+    }
+    .start-here h2 {
+      margin: 0 0 8px;
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+    .start-here p {
+      margin: 0 0 10px;
+      color: var(--ink-soft);
+      font-size: 0.98rem;
+      line-height: 1.45;
+    }
+    .start-here p:last-child { margin-bottom: 0; }
+
+    .next-svc {
+      background: var(--muted-bg);
+      border-radius: 12px;
+      padding: 10px 12px;
+      margin: 0 0 12px;
+      font-size: 0.98rem;
+      line-height: 1.4;
+    }
+    .next-svc strong { display: block; font-size: 1rem; margin-bottom: 4px; color: var(--ink); }
+
+    .sticky-bar {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 50;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      max-width: 420px;
+      margin: 0 auto;
+      padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+      background: rgba(255, 250, 243, 0.96);
+      border-top: 1.5px solid var(--line);
+      box-shadow: 0 -6px 24px rgba(42, 33, 24, 0.1);
+      backdrop-filter: blur(8px);
+    }
+    .sticky-bar a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      font: inherit;
+      font-weight: 700;
+      text-decoration: none;
+      text-align: center;
+      touch-action: manipulation;
+    }
+    .sticky-bar .sticky-text {
+      background: var(--pay);
+      color: var(--pay-ink);
+      border: 1.5px solid var(--pay);
+    }
+    .sticky-bar .sticky-call {
+      background: var(--paper);
+      color: var(--ink);
+      border: 1.5px solid var(--line);
+    }
+
+    #print-card {
+      display: none;
+    }
+    @media print {
+      @page { size: 5in 7in; margin: 0.35in; }
+      body {
+        background: #fff;
+        padding: 0;
+        font-size: 11pt;
+        color: #2a2118;
+      }
+      .wrap, .sticky-bar, #print-card-btn { display: none !important; }
+      #print-card {
+        display: block !important;
+        width: 100%;
+        max-width: 4.3in;
+        margin: 0 auto;
+      }
+      #print-card .pc-logo { width: 100%; height: auto; margin: 0 0 10px; }
+      #print-card h1 { font-size: 14pt; margin: 0 0 6px; text-align: center; }
+      #print-card .pc-guest { text-align: center; font-size: 12pt; font-weight: 700; margin: 0 0 12px; }
+      #print-card dl { margin: 0 0 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 4px 10px; font-size: 10pt; }
+      #print-card dt { font-weight: 700; margin: 0; }
+      #print-card dd { margin: 0 0 6px; }
+      #print-card .pc-next { margin: 8px 0 12px; padding: 8px; border: 1px solid #d7c4a4; border-radius: 8px; font-size: 10pt; }
+      #print-card .pc-foot { text-align: center; font-size: 10pt; font-weight: 700; margin: 10px 0; }
+      #print-card .pc-qr { display: block; width: 1.35in; height: 1.35in; margin: 8px auto; }
+      #print-card .pc-tag { text-align: center; font-size: 9pt; line-height: 1.35; color: #5c4a36; margin: 0; }
+    }
+    .pc-screen { display: none; }
   </style>
 </head>
 <body>
@@ -362,7 +465,7 @@
       <input id="guest-name" name="name" type="text" inputmode="text" autocomplete="name" autocapitalize="words" maxlength="80" placeholder="Your name">
     </label>
 
-    <div class="paywarn" id="paywarn" hidden role="status">Heads up — your last membership payment didn't go through, so member perks are paused for now. Your banked hours are held 30 days. Text us at (903) 865-3518 and we'll sort it out.</div>
+    <div class="paywarn" id="paywarn" hidden role="status">Heads up. Your last membership payment didn't go through, so member perks are paused for now. Your banked hours are held 30 days. Text us at (903) 865-3518 and we'll sort it out.</div>
     <section class="member" id="member" hidden aria-label="Membership">
       <span class="badge" id="m-badge"></span><span class="who" id="m-who"></span>
       <p id="m-rate"></p>
@@ -380,41 +483,59 @@
         <p><strong>What the free service call covers.</strong> It covers the $75 trip only, on one visit. Labor, parts, after-hours, and a return trip for a new issue still bill normally.</p>
       </div>
     </div>
+    <section class="start-here" id="start-here" hidden aria-labelledby="start-h">
+      <h2 id="start-h">Start here</h2>
+      <p>This is your personal stop with the shop. Pay, invoices, estimates, and receipts open a secure QuoteIQ page in a new tab. Everything else stays on this page.</p>
+      <p>Each button below has a short note so you know what it does before you tap. Text or call us at <a href="tel:+19038653518">(903) 865-3518</a>. A person is always a tap away.</p>
+    </section>
+
     <p class="empty" id="empty" hidden>Your personal links will show here once Mitch sends your portal link. Questions? Call or text below.</p>
 
     <div class="taps">
       <a class="tap tap-pay" id="tap-pay" target="_blank" rel="noopener noreferrer">
         <span class="tap-label">Pay invoice</span>
-        <span class="tap-note">We'll text you a secure payment link if this one isn't ready.</span>
+        <span class="tap-note" id="pay-note">Opens a secure QuoteIQ page in a new tab so you can pay your open invoice.</span>
         <span class="sr-only">Opens in a new tab.</span>
       </a>
 
       <a class="tap" id="tap-invoice" target="_blank" rel="noopener noreferrer">
         <span class="tap-label">Invoice</span>
-        <span class="tap-note">Your current invoice.</span>
+        <span class="tap-note" id="invoice-note">Opens your current invoice on QuoteIQ in a new tab.</span>
         <span class="sr-only">Opens in a new tab.</span>
       </a>
 
       <a class="tap" id="tap-estimate" target="_blank" rel="noopener noreferrer">
         <span class="tap-label">Estimate</span>
-        <span class="tap-note">Your estimate.</span>
+        <span class="tap-note" id="estimate-note">Opens your estimate on QuoteIQ in a new tab.</span>
+        <span class="sr-only">Opens in a new tab.</span>
+      </a>
+
+      <a class="tap" id="tap-estimate-approve" target="_blank" rel="noopener noreferrer">
+        <span class="tap-label">Approve this estimate</span>
+        <span class="tap-note" id="estimate-approve-note">Opens your estimate on QuoteIQ so you can approve there. Nothing to sign on this page.</span>
+        <span class="sr-only">Opens in a new tab.</span>
+      </a>
+
+      <a class="tap" id="tap-estimate-changes" target="_blank" rel="noopener noreferrer">
+        <span class="tap-label">Ask for changes</span>
+        <span class="tap-note" id="estimate-changes-note">Opens the same QuoteIQ estimate page. Use Ask for changes there.</span>
         <span class="sr-only">Opens in a new tab.</span>
       </a>
 
       <a class="tap" id="tap-receipt" target="_blank" rel="noopener noreferrer">
         <span class="tap-label">Receipts</span>
-        <span class="tap-note" id="receipt-note">Paid receipt — opens when your invoice is marked Paid.</span>
+        <span class="tap-note" id="receipt-note">Opens your paid receipt on QuoteIQ in a new tab after your invoice is marked paid.</span>
         <span class="sr-only" id="receipt-sr">Opens in a new tab.</span>
       </a>
 
       <button type="button" class="tap" id="tap-path" aria-pressed="false">
         <span class="tap-label" id="path-label">Turn PATH off</span>
-        <span class="tap-note" id="path-note" aria-live="polite">Place-in-line texts stay on.</span>
+        <span class="tap-note" id="path-note" aria-live="polite">PATH texts your place in line. Tap to turn those texts off on this phone. Reply HUSH anytime to leave PATH.</span>
       </button>
 
       <button type="button" class="tap" id="tap-next" aria-expanded="false" aria-controls="next-panel">
         <span class="tap-label">What's next</span>
-        <span class="tap-note" id="next-note">Tap to read.</span>
+        <span class="tap-note" id="next-note">Tap to read how PATH works for your visit day.</span>
       </button>
       <div class="panel" id="next-panel" hidden>
         <p>We'll text your place in line and a heads-up when you're next. First stop of the day stays quiet. Reply HUSH anytime to leave PATH.</p>
@@ -423,7 +544,8 @@
 
     <section class="block" id="trailer-block" hidden aria-labelledby="trailer-h">
       <h2 id="trailer-h">Your rig</h2>
-      <p class="sub">Fix anything that is off. Saving stays on this phone. Emailing the shop queues it for the same day — this page does not write the shop system itself.</p>
+      <div class="next-svc" id="next-svc" hidden aria-live="polite"></div>
+      <p class="sub">Fix anything that is off. Saving stays on this phone. Emailing the shop queues it for the same day. This page does not write the shop system itself.</p>
       <div class="fields" id="trailer-fields">
         <div class="split">
           <label>Year
@@ -476,13 +598,14 @@
       <div class="actions">
         <button type="button" class="btn" id="trailer-save">Save on this phone</button>
         <button type="button" class="btn primary" id="trailer-send">Email rig details to the shop</button>
+        <button type="button" class="btn" id="print-card-btn" hidden>Print this card</button>
       </div>
       <p class="status" id="trailer-status" role="status"></p>
     </section>
 
     <section class="block" id="work-block" hidden aria-labelledby="work-h">
       <h2 id="work-h">Work on this coach</h2>
-      <p class="sub" id="work-intro">Done and what’s still planned, with the price.</p>
+      <p class="sub" id="work-intro">Work that's done and work that's still planned, with the price. If something looks off, text us at (903) 865-3518.</p>
       <h3>Planned</h3>
       <ul class="log" id="work-planned"></ul>
       <h3>Done</h3>
@@ -512,7 +635,7 @@
 
     <section class="gallery" aria-labelledby="g-h">
       <h2 id="g-h">Your job photos</h2>
-      <p class="sub">Okay with us sharing some of these on Facebook, Google, or our site? Totally your call — nothing gets shared while this is set to None. Change it anytime.</p>
+      <p class="sub">Okay with us sharing some of these on Facebook, Google, or our site? Totally your call. Nothing gets shared while this is set to None. Change it anytime.</p>
       <div class="modes" role="group" aria-label="Photo sharing">
         <button type="button" data-mode="all" aria-pressed="false">Opt in all</button>
         <button type="button" data-mode="pick" aria-pressed="false">Pick which</button>
@@ -533,241 +656,290 @@
     </p>
   </main>
 
+  <nav class="sticky-bar" aria-label="Contact the shop">
+    <a class="sticky-text" href="sms:+19038653518">Text us</a>
+    <a class="sticky-call" href="tel:+19038653518">Call us</a>
+  </nav>
+
+  <div id="print-card" aria-hidden="true">
+    <img
+      class="pc-logo"
+      src="logo-main-v3.svg"
+      alt="Mitch's Mobile RV Repair"
+      onerror="this.onerror=null;this.src='https://cdn.jsdelivr.net/gh/rvtechmmrv/mmrv-portal-v1@main/logo-main-v3.svg'"
+    >
+    <h1>Your coach card</h1>
+    <p class="pc-guest" id="pc-guest"></p>
+    <dl>
+      <dt>Year</dt><dd id="pc-year"></dd>
+      <dt>Make</dt><dd id="pc-make"></dd>
+      <dt>Model</dt><dd id="pc-model"></dd>
+      <dt>Length</dt><dd id="pc-length"></dd>
+      <dt>Type</dt><dd id="pc-type"></dd>
+      <dt>Warranty</dt><dd id="pc-warranty"></dd>
+      <dt>Warranty expires</dt><dd id="pc-expiry"></dd>
+    </dl>
+    <div class="pc-next" id="pc-next"></div>
+    <p class="pc-foot">Mitch's Mobile RV Repair · (903) 865-3518</p>
+    <img class="pc-qr" id="pc-qr" width="180" height="180" alt="QR code for your portal page">
+    <p class="pc-tag">Keep this in the coach. Scan the code to open your page, or text or call us.</p>
+  </div>
+
   <script>
     /* Shape B pretty link: ?m=CODE (or #m=CODE) → member record.
        Source of truth is members.json; MEMBERS_FALLBACK mirrors it so the page
        still works when opened as a local file (fetch blocked). No login, no backend. */
     /* Keep in sync with members.json. */
     var MEMBERS_FALLBACK = {
-      "paula-scott": {
-        "name": "Paula & Scott",
-        "tier": "",
-        "hours": 0,
-        "qi_customer_id": "4ihx2Oga6QngLKmYEdvn",
-        "PAY_LINK": "https://quoteiq-2.web.app/invoices/babbbfd4a81057729e87",
-        "INVOICE_LINK": "https://quoteiq-2.web.app/invoices/babbbfd4a81057729e87",
-        "ESTIMATE_LINK": "https://quoteiq-2.web.app/estimates/LQ8RLZWJLyxuz0Zl7ODp",
-        "RECEIPT_LINK": "https://quoteiq-2.web.app/invoices/pJIJI0EbatvJuiN5pG9k",
-        "trailer": {
-          "year": "",
-          "make": "",
-          "model": "",
-          "length_ft": "",
-          "type": "",
-          "data_plate_photos": [],
-          "warranty_provider": "",
-          "warranty_expiry": "",
-          "systems": {
-            "ac": "",
-            "wh": "",
-            "solar": ""
+          "paula-scott": {
+                "name": "Paula & Scott",
+                "tier": "",
+                "hours": 0,
+                "qi_customer_id": "4ihx2Oga6QngLKmYEdvn",
+                "PAY_LINK": "https://quoteiq-2.web.app/invoices/babbbfd4a81057729e87",
+                "INVOICE_LINK": "https://quoteiq-2.web.app/invoices/babbbfd4a81057729e87",
+                "ESTIMATE_LINK": "https://quoteiq-2.web.app/estimates/LQ8RLZWJLyxuz0Zl7ODp",
+                "RECEIPT_LINK": "https://quoteiq-2.web.app/invoices/pJIJI0EbatvJuiN5pG9k",
+                "next_service": {
+                      "date": "2026-10-30",
+                      "label": "Flush"
+                },
+                "trailer": {
+                      "year": "",
+                      "make": "",
+                      "model": "",
+                      "length_ft": "",
+                      "type": "",
+                      "data_plate_photos": [],
+                      "warranty_provider": "",
+                      "warranty_expiry": "",
+                      "systems": {
+                            "ac": "",
+                            "wh": "",
+                            "solar": ""
+                      },
+                      "parked": "18560 Co Rd 4256, Henderson, Texas 75654",
+                      "seed_note": "Placeholder rig. Year, make, model, length, type, warranty, and systems were not on the QuoteIQ contact (2026-10-26). Parked is the address on estimate #161 and invoice #207."
+                },
+                "work_log": [
+                      {
+                            "date": "2026-06-14",
+                            "title": "Invoice #130",
+                            "status": "done",
+                            "amount": 77.63,
+                            "note": "Paid receipt."
+                      },
+                      {
+                            "date": "2026-10-14",
+                            "title": "Estimate #161, general repair",
+                            "status": "planned",
+                            "amount": 245.53,
+                            "note": "Open. General repair $150, service call $75, shop supply $5, plus tax."
+                      },
+                      {
+                            "date": "2026-10-20",
+                            "title": "Lap seal deposit",
+                            "status": "planned",
+                            "amount": 75,
+                            "note": "Invoice #207, pending. Six-month lap-seal plan."
+                      },
+                      {
+                            "date": "2026-10-30",
+                            "title": "Flush",
+                            "status": "planned",
+                            "amount": null,
+                            "note": "On the calendar Oct 30. No price on the schedule yet."
+                      }
+                ]
           },
-          "parked": "18560 Co Rd 4256, Henderson, Texas 75654",
-          "seed_note": "Placeholder rig. Year, make, model, length, type, warranty, and systems were not on the QuoteIQ contact (2026-10-26). Parked is the address on estimate #161 and invoice #207."
-        },
-        "work_log": [
-          {
-            "date": "2026-06-14",
-            "title": "Invoice #130",
-            "status": "done",
-            "amount": 77.63,
-            "note": "Paid receipt."
+          "james-april": {
+                "name": "James & April",
+                "tier": "",
+                "hours": 0,
+                "qi_customer_id": "9Oyz2c4MZUGz84rS5Aqf",
+                "PAY_LINK": "",
+                "INVOICE_LINK": "",
+                "ESTIMATE_LINK": "",
+                "RECEIPT_LINK": "https://quoteiq-2.web.app/invoices/lZLLttkd3IubcNTEvMe0",
+                "next_service": {
+                      "date": "",
+                      "label": ""
+                },
+                "notes": "All QI invoices Paid (newest #149 Jul). No open estimate. Pay/Invoice/Estimate muted until new docs exist.",
+                "trailer": {
+                      "year": "",
+                      "make": "",
+                      "model": "",
+                      "length_ft": "",
+                      "type": "",
+                      "data_plate_photos": [],
+                      "warranty_provider": "",
+                      "warranty_expiry": "",
+                      "systems": {
+                            "ac": "Two roof units serviced 2026-07-24 (invoice #149).",
+                            "wh": "",
+                            "solar": ""
+                      },
+                      "parked": "3397 U.S. 259, Henderson, TX 75652",
+                      "seed_note": "Placeholder rig except AC and parked. AC is from invoice #149. Parked is the address on that invoice. Year, make, model, length, type, warranty, water heater, and solar were not on the QuoteIQ contact (2026-10-26)."
+                },
+                "work_log": [
+                      {
+                            "date": "2026-05-15",
+                            "title": "Invoice #116",
+                            "status": "done",
+                            "amount": 327.29,
+                            "note": "Paid."
+                      },
+                      {
+                            "date": "2026-07-24",
+                            "title": "AC clean, two units",
+                            "status": "done",
+                            "amount": 258.75,
+                            "note": "Invoice #149, paid. First unit $175, additional unit $75, card fee in the total."
+                      }
+                ]
           },
-          {
-            "date": "2026-10-14",
-            "title": "Estimate #161 — general repair",
-            "status": "planned",
-            "amount": 245.53,
-            "note": "Open. General repair $150, service call $75, shop supply $5, plus tax."
+          "blake-wilson": {
+                "name": "Blake Wilson",
+                "tier": "premium",
+                "hours": 3,
+                "hours_note": "Demo midpoint so the free-trip bar reads 3 of 6. Not a QuoteIQ hour balance.",
+                "qi_customer_id": "1i5Q6WXXRt71uKW1GaDp",
+                "PAY_LINK": "",
+                "INVOICE_LINK": "",
+                "ESTIMATE_LINK": "",
+                "RECEIPT_LINK": "https://quoteiq-2.web.app/invoices/83SuTYjCMII7ILtyRvzK",
+                "next_service": {
+                      "date": "",
+                      "label": ""
+                },
+                "notes": "Invoice #197 Paid (was estimate #127). Pay/Invoice/Estimate muted (no open balance). tier premium is the v2 demo.",
+                "trailer": {
+                      "year": "",
+                      "make": "",
+                      "model": "",
+                      "length_ft": "",
+                      "type": "",
+                      "data_plate_photos": [],
+                      "warranty_provider": "",
+                      "warranty_expiry": "",
+                      "systems": {
+                            "ac": "",
+                            "wh": "",
+                            "solar": ""
+                      },
+                      "parked": "5059 FM 225, Henderson, Texas 75654",
+                      "seed_note": "Placeholder rig. Year, make, model, length, type, warranty, and systems were not on the QuoteIQ contact (2026-10-26). Parked is the address on invoice #197."
+                },
+                "work_log": [
+                      {
+                            "date": "2026-09-28",
+                            "title": "Skylight, camp kitchen door, and slide roof",
+                            "status": "done",
+                            "amount": 1425,
+                            "note": "Invoice #197, paid. Service call, skylight, fiberglass repair, and EPDM patch."
+                      }
+                ]
           },
-          {
-            "date": "2026-10-20",
-            "title": "Lap seal deposit",
-            "status": "planned",
-            "amount": 75,
-            "note": "Invoice #207, pending. Six-month lap-seal plan."
+          "lisa": {
+                "name": "Lisa",
+                "tier": "premium",
+                "hours": 2.5,
+                "qi_customer_id": "",
+                "PAY_LINK": "",
+                "INVOICE_LINK": "",
+                "ESTIMATE_LINK": "",
+                "RECEIPT_LINK": "",
+                "next_service": {
+                      "date": "2026-11-07",
+                      "label": "Seal check before a trip"
+                },
+                "hours_note": "Demo stub so the free-trip bar reads 2.5 of 6. Not a QuoteIQ hour balance.",
+                "notes": "Family beta, Premium demo. Mitch yes 2026-10-26. QI links TBD Elmer/Cobs. Trailer and work log are demo fills so the page isn't empty.",
+                "trailer": {
+                      "year": "2021",
+                      "make": "Grand Design",
+                      "model": "Imagine 2800BH",
+                      "length_ft": "32",
+                      "type": "TT",
+                      "data_plate_photos": [],
+                      "warranty_provider": "Grand Design",
+                      "warranty_expiry": "2027-06-01",
+                      "systems": {
+                            "ac": "15k ducted roof unit",
+                            "wh": "6-gallon gas/electric",
+                            "solar": "200W suitcase"
+                      },
+                      "parked": "Henderson, TX",
+                      "seed_note": "Demo rig for the Premium family beta so the card isn't empty. Not from QuoteIQ (2026-10-26). QI links TBD Elmer/Cobs."
+                },
+                "work_log": [
+                      {
+                            "date": "2026-09-04",
+                            "title": "Roof AC service",
+                            "status": "done",
+                            "amount": 185,
+                            "note": "Demo line. One roof unit cleaned and checked. Not a QuoteIQ invoice."
+                      },
+                      {
+                            "date": "2026-11-07",
+                            "title": "Seal check before a trip",
+                            "status": "planned",
+                            "amount": 150,
+                            "note": "Demo line. $75 service call plus labor. Not booked yet."
+                      }
+                ]
           },
-          {
-            "date": "2026-10-30",
-            "title": "Flush",
-            "status": "planned",
-            "amount": null,
-            "note": "On the calendar Oct 30. No price on the schedule yet."
+          "don-francis": {
+                "name": "Don Francis",
+                "tier": "basic",
+                "hours": 4,
+                "qi_customer_id": "",
+                "PAY_LINK": "",
+                "INVOICE_LINK": "",
+                "ESTIMATE_LINK": "",
+                "RECEIPT_LINK": "",
+                "next_service": {
+                      "date": "2026-11-18",
+                      "label": "Slide adjustment"
+                },
+                "hours_note": "Demo stub so the free-trip bar reads 4 of 9. Not a QuoteIQ hour balance.",
+                "notes": "Family beta, Basic demo. Mitch yes 2026-10-26. QI links TBD Elmer/Cobs. Trailer and work log are demo fills so the page isn't empty.",
+                "trailer": {
+                      "year": "2018",
+                      "make": "Grand Design",
+                      "model": "Reflection 150 Series",
+                      "length_ft": "31",
+                      "type": "5th",
+                      "data_plate_photos": [],
+                      "warranty_provider": "Expired (demo)",
+                      "warranty_expiry": "2023-05-01",
+                      "systems": {
+                            "ac": "13.5k roof unit",
+                            "wh": "Suburban 6-gallon",
+                            "solar": "None on the roof"
+                      },
+                      "parked": "Henderson, TX",
+                      "seed_note": "Demo rig for the Basic family beta so the card isn't empty. Not from QuoteIQ (2026-10-26). QI links TBD Elmer/Cobs."
+                },
+                "work_log": [
+                      {
+                            "date": "2026-06-20",
+                            "title": "Water heater service",
+                            "status": "done",
+                            "amount": 240,
+                            "note": "Demo line. Anode and flush. Not a QuoteIQ invoice."
+                      },
+                      {
+                            "date": "2026-11-18",
+                            "title": "Slide adjustment",
+                            "status": "planned",
+                            "amount": 125,
+                            "note": "Demo line. Labor after the service call. Not booked yet."
+                      }
+                ]
           }
-        ]
-      },
-      "james-april": {
-        "name": "James & April",
-        "tier": "",
-        "hours": 0,
-        "qi_customer_id": "9Oyz2c4MZUGz84rS5Aqf",
-        "PAY_LINK": "",
-        "INVOICE_LINK": "",
-        "ESTIMATE_LINK": "",
-        "RECEIPT_LINK": "https://quoteiq-2.web.app/invoices/lZLLttkd3IubcNTEvMe0",
-        "notes": "All QI invoices Paid (newest #149 Jul). No open estimate. Pay/Invoice/Estimate muted until new docs exist.",
-        "trailer": {
-          "year": "",
-          "make": "",
-          "model": "",
-          "length_ft": "",
-          "type": "",
-          "data_plate_photos": [],
-          "warranty_provider": "",
-          "warranty_expiry": "",
-          "systems": {
-            "ac": "Two roof units serviced 2026-07-24 (invoice #149).",
-            "wh": "",
-            "solar": ""
-          },
-          "parked": "3397 U.S. 259, Henderson, TX 75652",
-          "seed_note": "Placeholder rig except AC and parked. AC is from invoice #149. Parked is the address on that invoice. Year, make, model, length, type, warranty, water heater, and solar were not on the QuoteIQ contact (2026-10-26)."
-        },
-        "work_log": [
-          {
-            "date": "2026-05-15",
-            "title": "Invoice #116",
-            "status": "done",
-            "amount": 327.29,
-            "note": "Paid."
-          },
-          {
-            "date": "2026-07-24",
-            "title": "AC clean — two units",
-            "status": "done",
-            "amount": 258.75,
-            "note": "Invoice #149, paid. First unit $175, additional unit $75, card fee in the total."
-          }
-        ]
-      },
-      "blake-wilson": {
-        "name": "Blake Wilson",
-        "tier": "premium",
-        "hours": 3,
-        "hours_note": "Demo midpoint so the free-trip bar reads 3 of 6. Not a QuoteIQ hour balance.",
-        "qi_customer_id": "1i5Q6WXXRt71uKW1GaDp",
-        "PAY_LINK": "",
-        "INVOICE_LINK": "",
-        "ESTIMATE_LINK": "https://quoteiq-2.web.app/estimates/83SuTYjCMII7ILtyRvzK",
-        "RECEIPT_LINK": "https://quoteiq-2.web.app/invoices/83SuTYjCMII7ILtyRvzK",
-        "notes": "Invoice #197 Paid (was estimate #127). Pay/Invoice muted (no open balance). tier premium is the v2 demo.",
-        "trailer": {
-          "year": "",
-          "make": "",
-          "model": "",
-          "length_ft": "",
-          "type": "",
-          "data_plate_photos": [],
-          "warranty_provider": "",
-          "warranty_expiry": "",
-          "systems": {
-            "ac": "",
-            "wh": "",
-            "solar": ""
-          },
-          "parked": "5059 FM 225, Henderson, Texas 75654",
-          "seed_note": "Placeholder rig. Year, make, model, length, type, warranty, and systems were not on the QuoteIQ contact (2026-10-26). Parked is the address on invoice #197."
-        },
-        "work_log": [
-          {
-            "date": "2026-09-28",
-            "title": "Skylight, camp kitchen door, and slide roof",
-            "status": "done",
-            "amount": 1425,
-            "note": "Invoice #197, paid. Service call, skylight, fiberglass repair, and EPDM patch."
-          }
-        ]
-      },
-      "lisa": {
-        "name": "Lisa",
-        "tier": "premium",
-        "hours": 2.5,
-        "qi_customer_id": "",
-        "PAY_LINK": "",
-        "INVOICE_LINK": "",
-        "ESTIMATE_LINK": "",
-        "RECEIPT_LINK": "",
-        "hours_note": "Demo stub so the free-trip bar reads 2.5 of 6. Not a QuoteIQ hour balance.",
-        "notes": "Family beta — Premium demo. Mitch yes 2026-10-26. QI links TBD Elmer/Cobs. Trailer and work log are demo fills so the page isn't empty.",
-        "trailer": {
-          "year": "2021",
-          "make": "Grand Design",
-          "model": "Imagine 2800BH",
-          "length_ft": "32",
-          "type": "TT",
-          "data_plate_photos": [],
-          "warranty_provider": "Grand Design",
-          "warranty_expiry": "2027-06-01",
-          "systems": {
-            "ac": "15k ducted roof unit",
-            "wh": "6-gallon gas/electric",
-            "solar": "200W suitcase"
-          },
-          "parked": "Henderson, TX",
-          "seed_note": "Demo rig for the Premium family beta so the card isn't empty. Not from QuoteIQ (2026-10-26). QI links TBD Elmer/Cobs."
-        },
-        "work_log": [
-          {
-            "date": "2026-09-04",
-            "title": "Roof AC service",
-            "status": "done",
-            "amount": 185,
-            "note": "Demo line. One roof unit cleaned and checked. Not a QuoteIQ invoice."
-          },
-          {
-            "date": "2026-11-07",
-            "title": "Seal check before a trip",
-            "status": "planned",
-            "amount": 150,
-            "note": "Demo line. $75 service call plus labor. Not booked yet."
-          }
-        ]
-      },
-      "don-francis": {
-        "name": "Don Francis",
-        "tier": "basic",
-        "hours": 4,
-        "qi_customer_id": "",
-        "PAY_LINK": "",
-        "INVOICE_LINK": "",
-        "ESTIMATE_LINK": "",
-        "RECEIPT_LINK": "",
-        "hours_note": "Demo stub so the free-trip bar reads 4 of 9. Not a QuoteIQ hour balance.",
-        "notes": "Family beta — Basic demo. Mitch yes 2026-10-26. QI links TBD Elmer/Cobs. Trailer and work log are demo fills so the page isn't empty.",
-        "trailer": {
-          "year": "2018",
-          "make": "Grand Design",
-          "model": "Reflection 150 Series",
-          "length_ft": "31",
-          "type": "5th",
-          "data_plate_photos": [],
-          "warranty_provider": "Expired (demo)",
-          "warranty_expiry": "2023-05-01",
-          "systems": {
-            "ac": "13.5k roof unit",
-            "wh": "Suburban 6-gallon",
-            "solar": "None on the roof"
-          },
-          "parked": "Henderson, TX",
-          "seed_note": "Demo rig for the Basic family beta so the card isn't empty. Not from QuoteIQ (2026-10-26). QI links TBD Elmer/Cobs."
-        },
-        "work_log": [
-          {
-            "date": "2026-06-20",
-            "title": "Water heater service",
-            "status": "done",
-            "amount": 240,
-            "note": "Demo line. Anode and flush. Not a QuoteIQ invoice."
-          },
-          {
-            "date": "2026-11-18",
-            "title": "Slide adjustment",
-            "status": "planned",
-            "amount": 125,
-            "note": "Demo line. Labor after the service call. Not booked yet."
-          }
-        ]
-      }
     };
     var TIERS = {
       basic:   { badge: "Basic · $99/yr",   rate: "$10/hr off labor", goal: 9 },
@@ -788,7 +960,16 @@
     var PATH_KEY = "mmrv-portal-path-off";
     var NAME_KEY = "mmrv-portal-guest-name";
     var PATH_OFF_COPY = "PATH texts are off. Text YES anytime to get back on.";
-    var RECEIPT_WAIT_COPY = "Receipt ready after payment";
+    var MUTED_PAY = "No open invoice to pay right now. Text us at (903) 865-3518 if you need one.";
+    var MUTED_INVOICE = "No open invoice right now. Text us at (903) 865-3518 if you need one.";
+    var MUTED_ESTIMATE = "No open estimate right now. Text us at (903) 865-3518 if you need one.";
+    var MUTED_RECEIPT = "No paid receipt to open yet. Text us at (903) 865-3518 if you think one should be here.";
+    var READY_PAY = "Opens a secure QuoteIQ page in a new tab so you can pay your open invoice.";
+    var READY_INVOICE = "Opens your current invoice on QuoteIQ in a new tab.";
+    var READY_ESTIMATE = "Opens your estimate on QuoteIQ in a new tab.";
+    var READY_RECEIPT = "Opens your paid receipt on QuoteIQ in a new tab.";
+    var READY_EST_APPROVE = "Opens your estimate on QuoteIQ so you can approve there. Nothing to sign on this page.";
+    var READY_EST_CHANGES = "Opens the same QuoteIQ estimate page. Use Ask for changes there.";
 
     function storageGet(key) {
       try { return localStorage.getItem(key); } catch (err) { return null; }
@@ -804,8 +985,9 @@
       return typeof url === "string" && /^https?:\/\//i.test(url.trim());
     }
 
-    function applyLink(id, url, unsetNote) {
+    function applyLink(id, url, mutedNote, readyNote) {
       var el = document.getElementById(id);
+      if (!el) return;
       var note = el.querySelector(".tap-note");
       var sr = el.querySelector(".sr-only");
       if (linkReady(url)) {
@@ -815,18 +997,19 @@
         el.classList.remove("is-muted");
         el.removeAttribute("aria-disabled");
         el.dataset.ready = "1";
+        if (readyNote && note) note.textContent = readyNote;
         if (sr) sr.hidden = false;
       } else {
         el.removeAttribute("href");
         el.classList.add("is-muted");
         el.setAttribute("aria-disabled", "true");
         el.dataset.ready = "0";
-        if (unsetNote && note) note.textContent = unsetNote;
+        if (mutedNote && note) note.textContent = mutedNote;
         if (sr) sr.hidden = true;
       }
-      el.addEventListener("click", function (event) {
+      el.onclick = function (event) {
         if (el.getAttribute("aria-disabled") === "true") event.preventDefault();
-      });
+      };
     }
 
     function pathIsOff() {
@@ -845,7 +1028,7 @@
         note.textContent = PATH_OFF_COPY;
       } else {
         label.textContent = "Turn PATH off";
-        note.textContent = "Place-in-line texts stay on.";
+        note.textContent = "PATH texts your place in line. Tap to turn those texts off on this phone. Reply HUSH anytime to leave PATH.";
       }
     }
 
@@ -1115,15 +1298,71 @@
       });
     }
 
+    function nextServiceLine(ns) {
+      var row = ns && typeof ns === "object" ? ns : {};
+      var date = String(row.date || "").trim();
+      var label = String(row.label || "").trim();
+      if (!date && !label) return "";
+      var when = showDate(date) || date;
+      if (label && when) return label + " · " + when;
+      return label || when;
+    }
+
+    function paintNextService(rec) {
+      var box = document.getElementById("next-svc");
+      if (!rec || !memberCode) {
+        box.hidden = true;
+        return;
+      }
+      box.hidden = false;
+      var line = nextServiceLine(rec.next_service);
+      if (line) {
+        box.innerHTML = "<strong>Next service</strong> " + line;
+      } else {
+        box.innerHTML = "<strong>Next service</strong> We'll add a next-service date after your next visit.";
+      }
+    }
+
+    function onFile(val) {
+      var text = String(val || "").trim();
+      return text || "Not on file yet.";
+    }
+
+    function rigTypeLabel(type) {
+      if (type === "TT") return "Travel trailer";
+      if (type === "5th") return "Fifth wheel";
+      if (type === "MH") return "Motorhome";
+      return "";
+    }
+
+    function paintPrintCard(rec) {
+      if (!rec || !memberCode) return;
+      var trailer = trailerFor(rec);
+      var name = cleanName(field("guest-name")) || rec.name || memberCode;
+      document.getElementById("pc-guest").textContent = name;
+      document.getElementById("pc-year").textContent = onFile(trailer.year);
+      document.getElementById("pc-make").textContent = onFile(trailer.make);
+      document.getElementById("pc-model").textContent = onFile(trailer.model);
+      document.getElementById("pc-length").textContent = trailer.length_ft
+        ? onFile(trailer.length_ft) + " ft"
+        : "Not on file yet.";
+      var typeText = rigTypeLabel(trailer.type);
+      document.getElementById("pc-type").textContent = typeText || "Not on file yet.";
+      document.getElementById("pc-warranty").textContent = onFile(trailer.warranty_provider);
+      document.getElementById("pc-expiry").textContent = onFile(trailer.warranty_expiry);
+      var ns = nextServiceLine(rec.next_service);
+      document.getElementById("pc-next").textContent = ns
+        ? "Next service: " + ns
+        : "Next service: Not on file yet.";
+      var qr = document.getElementById("pc-qr");
+      qr.src = "qr/" + memberCode + ".svg";
+      qr.alt = "QR code for portal.mmrvsolar.com";
+    }
+
     function paintWork(rec, tier, hours) {
       var block = document.getElementById("work-block");
       if (!rec) { block.hidden = true; return; }
       block.hidden = false;
-      var intro = document.getElementById("work-intro");
-      var goal = TIERS[tier] && TIERS[tier].goal;
-      intro.textContent = goal
-        ? "Done and what’s still planned, with the price. Free-trip hours are on the membership card above (" + (isNaN(hours) ? 0 : hours) + " of " + goal + ")."
-        : "Done and what’s still planned, with the price.";
       var rows = Array.isArray(rec.work_log) ? rec.work_log.filter(function (row) {
         return row && (row.status === "done" || row.status === "planned");
       }) : [];
@@ -1429,6 +1668,11 @@
       document.getElementById("trailer-save").addEventListener("click", saveTrailerLocal);
       document.getElementById("trailer-send").addEventListener("click", sendRig);
       document.getElementById("time-form").addEventListener("submit", requestTime);
+      document.getElementById("print-card-btn").addEventListener("click", function () {
+        if (!currentRecord || !memberCode) return;
+        paintPrintCard(currentRecord);
+        window.print();
+      });
       loadStoredPlates();
     }
 
@@ -1436,19 +1680,26 @@
       var rec = memberCode && members && Object.prototype.hasOwnProperty.call(members, memberCode) ? members[memberCode] : null;
       var r = rec || {};
       currentRecord = rec;
-      applyLink("tap-pay", r.PAY_LINK, "Link coming by text.");
-      applyLink("tap-invoice", r.INVOICE_LINK, "Link coming by text.");
-      applyLink("tap-estimate", r.ESTIMATE_LINK, "Link coming by text.");
-      applyLink("tap-receipt", r.RECEIPT_LINK, RECEIPT_WAIT_COPY);
+      applyLink("tap-pay", r.PAY_LINK, MUTED_PAY, READY_PAY);
+      applyLink("tap-invoice", r.INVOICE_LINK, MUTED_INVOICE, READY_INVOICE);
+      applyLink("tap-estimate", r.ESTIMATE_LINK, MUTED_ESTIMATE, READY_ESTIMATE);
+      applyLink("tap-estimate-approve", r.ESTIMATE_LINK, MUTED_ESTIMATE, READY_EST_APPROVE);
+      applyLink("tap-estimate-changes", r.ESTIMATE_LINK, MUTED_ESTIMATE, READY_EST_CHANGES);
+      applyLink("tap-receipt", r.RECEIPT_LINK, MUTED_RECEIPT, READY_RECEIPT);
       document.getElementById("empty").hidden = !!rec;
+      document.getElementById("start-here").hidden = !rec;
       var input = document.getElementById("guest-name");
       if (rec && rec.name && !input.value) input.value = rec.name;
       var tier = resolvedTier(rec);
       var hours = resolvedHours(rec, tier);
       paintMember(tier, rec ? rec.name : "", hours);
       paintTrailer(rec);
+      paintNextService(rec);
       paintWork(rec, tier, hours);
       paintQuote(rec, tier);
+      paintPrintCard(rec);
+      var printBtn = document.getElementById("print-card-btn");
+      if (printBtn) printBtn.hidden = !rec;
     }
 
     function paintTerms(tier) {

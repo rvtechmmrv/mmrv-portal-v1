@@ -1,0 +1,10 @@
+{
+  "name": "mmrv-portal-v1",
+  "private": true,
+  "scripts": {
+    "build:qr": "node scripts/generate-qr.mjs"
+  },
+  "devDependencies": {
+    "qrcode": "^1.5.4"
+  }
+}
